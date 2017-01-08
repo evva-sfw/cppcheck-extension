@@ -1,0 +1,81 @@
+{
+    "name": "cppcheck",
+    "displayName": "cppcheck",
+    "description": "Invokes the 'cppcheck' static C++ code analyzer.",
+    "version": "0.0.1",
+    "author": "Matthew Ferreira",
+    "publisher": "matthewferreira",
+    "engines": {
+        "vscode": "^1.5.0"
+    },
+    "categories": [
+        "Linters"
+    ],
+    "activationEvents": [
+        "onLanguage:cpp",
+        "*"
+    ],
+    "main": "./extension",    
+    "contributes": {
+        "commands": [
+            {
+                "command": "cppcheck.runAnalysis",
+                "title": "Analyze current file",
+                "category": "Cppcheck"
+            },
+            {
+                "command": "cppcheck.runAnalysisAllFiles",
+                "title": "Analyze workspace",
+                "category": "Cppcheck"
+            },
+            {
+                "command": "cppcheck.showCommands",
+                "title": "Show commands",
+                "category": "Cppcheck"
+            }],
+        "configuration": {
+            "type": "object",
+            "title": "cppcheck",
+            "properties": {
+                "cppcheck.enable": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Controls whether cppcheck is enabled for C++ files."
+                },
+                "cppcheck.cppcheckPath": {
+                    "type": "string",
+                    "default": null,
+                    "description": "The path to the cppcheck executable. If not set, the default location will be used."
+                },
+                "cppcheck.includePaths": {
+                    "type": "array",
+                    "default": [ ],
+                    "description": "Paths to search for include files. They may be relative or absolute."
+                },
+                "cppcheck.platform": {
+                    "type": "string",
+                    "enum": [ "unix32", "unix64", "win32A", "win32W", "win64", "native" ],
+                    "default": "native",
+                    "description": "The platform used for types and sizes."
+                },
+                "cppcheck.standard": {
+                    "type": "array",
+                    "default": [ "c11", "c++11" ],
+                    "description": "The language standards to check against. Can be one or more of: posix, c89, c99, c11, c++03, c++11."
+                }
+            }
+        }
+    },
+    "scripts": {
+        "postinstall": "node ./node_modules/vscode/bin/install",
+        "test": "node ./node_modules/vscode/bin/test"
+    },
+    "devDependencies": {
+        "typescript": "^2.0.3",
+        "vscode": "^1.0.0",
+        "mocha": "^2.3.3",
+        "eslint": "^3.6.0",
+        "@types/node": "^6.0.40",
+        "@types/mocha": "^2.2.32"
+    }
+}
