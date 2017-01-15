@@ -1,20 +1,17 @@
 /*
- * PARAMCHECK.JS
+ * PARAMCHECK.TS
  * -------------
  * Contains functions that check whether provided parameters are valid.
  */
 
-const _ = require("lodash");
+import * as _ from "lodash";
 
-exports.isValidStandard = isValidStandard;
-exports.isValidPlatform = isValidPlatform;
-
-function isValidStandard(standard) {
+export function isValidStandard(standard: string): boolean {
     const allowedStandards = [ "posix", "c89", "c99", "c11", "c++03", "c++11" ];
     return _.includes(allowedStandards, standard);
 }
 
-function isValidPlatform(platform) {
+export function isValidPlatform(platform: string): boolean {
     const allowedPlatforms = [ "unix32", "unix64", "win32A", "win32W", "win64", "native" ];
     return _.includes(allowedPlatforms, platform);
 }
