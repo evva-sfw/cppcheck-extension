@@ -6,12 +6,15 @@
 
 const _ = require("lodash");
 
-export function isValidStandard(standard) {
+exports.isValidStandard = isValidStandard;
+exports.isValidPlatform = isValidPlatform;
+
+function isValidStandard(standard) {
     const allowedStandards = [ "posix", "c89", "c99", "c11", "c++03", "c++11" ];
-    return _.contains(allowedStandards, standard);
+    return _.includes(allowedStandards, standard);
 }
 
-export function isValidPlatform(platform) {
+function isValidPlatform(platform) {
     const allowedPlatforms = [ "unix32", "unix64", "win32A", "win32W", "win64", "native" ];
-    return _.contains(allowedPlatforms, platform);
+    return _.includes(allowedPlatforms, platform);
 }

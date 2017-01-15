@@ -6,10 +6,13 @@
 
 const vscode = require("vscode");
 const cp = require("child_process");
-const pc = require("./paramcheck");
 const _ = require("lodash");
+const pc = require("./paramcheck");
 
-export function runOnFile(config, fileName, workspaceDir) {
+exports.runOnFile = runOnFile;
+exports.runOnWorkspace = runOnWorkspace;
+
+function runOnFile(config, fileName, workspaceDir) {
     if (!config["enable"]) {
         vscode.window.showInformationMessage("Cppcheck is not enabled.");
         return;
@@ -21,7 +24,7 @@ export function runOnFile(config, fileName, workspaceDir) {
     return out;
 }
 
-export function runOnWorkspace(config, workspaceDir) {
+function runOnWorkspace(config, workspaceDir) {
     if (!config["enable"]) {
         vscode.window.showInformationMessage("Cppcheck is not enabled.");
         return;

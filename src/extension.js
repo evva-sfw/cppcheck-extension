@@ -6,15 +6,18 @@
 
 const vscode = require("vscode");
 const fs = require("fs");
+const _ = require("lodash");
 const pc = require("./paramcheck");
 const Analyzer = require("./analyzer");
-const _ = require("lodash");
 
 let disposables;
 let config;
 let outputChannel;
 
-export function activate(context) {
+exports.activate = activate;
+exports.deactivate = deactivate;
+
+function activate(context) {
     console.log("Cppcheck now loaded");
     disposables = new Set();
 
@@ -40,7 +43,7 @@ export function activate(context) {
     disposables.add(statusItem);
 }
 
-export function deactivate() {
+function deactivate() {
     _.each(disposables, doDispose);
 }
 
