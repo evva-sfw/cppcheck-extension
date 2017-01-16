@@ -13,8 +13,6 @@ let disposables;
 let config;
 let outputChannel;
 let statusItem;
-exports.activate = activate;
-exports.deactivate = deactivate;
 function activate(context) {
     console.log("Cppcheck now loaded");
     disposables = new Set();
@@ -53,17 +51,28 @@ function showCommands() {
     });
 }
 function runAnalysis() {
+    let langId = vscode.window.activeTextEditor.document.languageId;
+    if (langId !== "cpp" && langId !== "c") {
+        vscode.window.showErrorMessage("Cppcheck: Analysis can only be run on C or C++ files.");
+        return Promise.resolve();
+    }
     let fileName = vscode.window.activeTextEditor.document.fileName;
     let workspaceDir = vscode.workspace.rootPath;
     let out = an.runOnFile(config, fileName, workspaceDir);
     outputChannel.clear();
     outputChannel.appendLine(out);
+    return Promise.resolve();
 }
 function runAnalysisAllFiles() {
+    if (!vscode.workspace.rootPath) {
+        vscode.window.showErrorMessage("Cppcheck: A workspace must be opened.");
+        return Promise.resolve();
+    }
     let workspaceDir = vscode.workspace.rootPath;
     let out = an.runOnWorkspace(config, workspaceDir);
     outputChannel.clear();
     outputChannel.appendLine(out);
+    return Promise.resolve();
 }
 function findCppcheckPath(settings) {
     let cppcheckPath = settings.get("cppcheckPath", null);

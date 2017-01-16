@@ -15,9 +15,6 @@ let config: {[key:string]:any};
 let outputChannel: vscode.OutputChannel;
 let statusItem: vscode.StatusBarItem;
 
-exports.activate = activate;
-exports.deactivate = deactivate;
-
 export function activate(context: vscode.ExtensionContext) {
     console.log("Cppcheck now loaded");
     disposables = new Set();
@@ -52,7 +49,11 @@ function doDispose(item: vscode.Disposable) {
 }
 
 function showCommands() {
-    let items = [];
+    interface CommandQuickPickItem extends vscode.QuickPickItem {
+        command: () => Promise<void>;
+    }
+
+    let items: CommandQuickPickItem[] = [];
 
     items.push({ description: "Runs the analyzer on the current file.", label: "Analyze current file", detail: null, command: runAnalysis });
     items.push({ description: "Runs the analyzer on the entire workspace.", label: "Analyze workspace", detail: null, command: runAnalysisAllFiles });
@@ -62,23 +63,37 @@ function showCommands() {
             selectedItem.command();
         }
     });
+
 }
 
 function runAnalysis() {
+    let langId = vscode.window.activeTextEditor.document.languageId;
+    if (langId !== "cpp" && langId !== "c") {
+        vscode.window.showErrorMessage("Cppcheck: Analysis can only be run on C or C++ files.")
+        return Promise.resolve();
+    }
+
     let fileName = vscode.window.activeTextEditor.document.fileName;
     let workspaceDir = vscode.workspace.rootPath;
     let out = an.runOnFile(config, fileName, workspaceDir);
 
     outputChannel.clear();
     outputChannel.appendLine(out);
+    return Promise.resolve();
 }
 
 function runAnalysisAllFiles() {
+    if (!vscode.workspace.rootPath) {
+        vscode.window.showErrorMessage("Cppcheck: A workspace must be opened.");
+        return Promise.resolve();
+    }
+
     let workspaceDir = vscode.workspace.rootPath;
     let out = an.runOnWorkspace(config, workspaceDir);
 
     outputChannel.clear();
     outputChannel.appendLine(out);
+    return Promise.resolve();
 }
 
 function findCppcheckPath(settings: vscode.WorkspaceConfiguration) {
