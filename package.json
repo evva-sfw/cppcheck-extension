@@ -17,7 +17,6 @@
     "Linters"
   ],
   "activationEvents": [
-    "onLanguage:cpp",
     "*"
   ],
   "main": "./out/src/extension",
@@ -117,14 +116,15 @@
     "@types/lodash": "^4.14.50",
     "@types/mocha": "^2.2.32",
     "@types/node": "^6.0.40",
-    "child_process": "^1.0.2",
     "eslint": "^3.6.0",
-    "fs": "0.0.1-security",
     "mocha": "^2.3.3",
     "typescript": "^2.0.3",
     "vscode": "^1.0.0"
   },
   "dependencies": {
-    "@types/lodash": "^4.14.50"
+    "child_process": "^1.0.2",
+    "fs": "0.0.1-security",
+    "lodash": "^4.14.50",
+    "os": "^0.1.1"
   }
 }

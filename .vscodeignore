@@ -13,3 +13,5 @@ src/**
 out/*/*.map
 out/test
 out/test/**
+**/*.ts
+!file.ts
