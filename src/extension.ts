@@ -67,6 +67,11 @@ function showCommands() {
 }
 
 function runAnalysis() {
+    if (!fs.existsSync(config["cppcheckPath"])) {
+        vscode.window.showErrorMessage("Cppcheck: Could not find cppcheck executable");
+        return Promise.resolve();
+    }
+
     let langId = vscode.window.activeTextEditor.document.languageId;
     if (langId !== "cpp" && langId !== "c") {
         vscode.window.showErrorMessage("Cppcheck: Analysis can only be run on C or C++ files.")
@@ -83,6 +88,11 @@ function runAnalysis() {
 }
 
 function runAnalysisAllFiles() {
+    if (!fs.existsSync(config["cppcheckPath"])) {
+        vscode.window.showErrorMessage("Cppcheck: Could not find cppcheck executable");
+        return Promise.resolve();
+    }
+
     if (!vscode.workspace.rootPath) {
         vscode.window.showErrorMessage("Cppcheck: A workspace must be opened.");
         return Promise.resolve();
