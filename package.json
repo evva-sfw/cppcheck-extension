@@ -6,7 +6,10 @@
   "author": "Matthew Ferreira",
   "publisher": "matthewferreira",
   "license": "MIT",
-  "repository": {},
+  "repository": {
+    "type": "Git",
+    "url": "https://github.com/matthewferreira/cppcheck-extension"
+  },
   "engines": {
     "vscode": "^1.5.0"
   },
