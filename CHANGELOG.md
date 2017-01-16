@@ -5,3 +5,7 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 ## [0.0.1] - 2017-01-15
 - Initial release
+
+## [0.0.2] - 2017-01-16
+- Detect Linux installations
+- Error checking when trying to run the analyzer

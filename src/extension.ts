@@ -6,6 +6,7 @@
 
 import * as vscode from "vscode";
 import * as fs from "fs";
+import * as os from "os";
 import * as _ from "lodash";
 import * as pc from "./paramcheck";
 import * as an from "./analyzer";
@@ -110,10 +111,21 @@ function findCppcheckPath(settings: vscode.WorkspaceConfiguration) {
     let cppcheckPath = settings.get("cppcheckPath", null);
 
     if (_.isNull(cppcheckPath)) {
-        var file = process.env["ProgramFiles"] + "\\Cppcheck\\cppcheck.exe";
-
-        if (fs.existsSync(file)) {
-            cppcheckPath = file;
+        let platform = os.platform();
+        if (platform === "win32") {
+            var file = process.env["ProgramFiles"] + "\\Cppcheck\\cppcheck.exe";
+            if (fs.existsSync(file)) {
+                cppcheckPath = file;
+            }
+        }
+        else if (platform === "linux") {
+            let attempts = [ "/usr/bin/cppcheck", "/usr/sbin/cppcheck", "/usr/share/bin/cppcheck" ];
+            for (let index = 0; index < attempts.length; index++) {
+                if (fs.existsSync(attempts[index])) {
+                    cppcheckPath = attempts[index];
+                    break;
+                }
+            }
         }
     }
 

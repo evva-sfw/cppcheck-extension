@@ -9,12 +9,14 @@ This extension utilizes the cppcheck static code analyzer to provide C and C++ c
 
 ## Requirements
 
-cppcheck must be installed. Any version may be used.
+cppcheck must be installed. Any version may be used. The extension will try to locate the cppcheck executable if possible. It will search
+the 32-bit Program Files directory on Windows, and several bin directories on Linux. If not found, `cppcheck.cppcheckPath` must be set to
+the correct location of the executable.
 
 ## Extension Settings
 
 * `cppcheck.enable`: Enable/disable the analyzer.
-* `cppcheck.cppcheckPath`: The path to the cppcheck executable. The Windows 32-bit executable will be located automatically.
+* `cppcheck.cppcheckPath`: The path to the cppcheck executable.
 * `cppcheck.includePaths`: The paths to any include directories.
 * `cppcheck.platform`: The compilation platform. This determines data types and sizes (e.g. sizeof(int)).
 * `cppcheck.standard`: The language standard to use (e.g. c++11).
