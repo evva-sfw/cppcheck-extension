@@ -1,5 +1,5 @@
 /*
- * PARAMCHECK.TEST.JS
+ * PARAMCHECK.TEST.TS
  * ------------------
  * Tests functions in 'paramcheck.ts'.
  */
