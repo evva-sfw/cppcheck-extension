@@ -11,3 +11,5 @@ tslint.json
 *.vsix
 src/**
 out/*/*.map
+out/test
+out/test/**
