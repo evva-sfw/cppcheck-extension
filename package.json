@@ -5,7 +5,7 @@
   "version": "0.0.1",
   "author": "Matthew Ferreira",
   "publisher": "matthewferreira",
-  "license": "MIT",
+  "license": "MIT License",
   "repository": {
     "type": "Git",
     "url": "https://github.com/matthewferreira/cppcheck-extension"
