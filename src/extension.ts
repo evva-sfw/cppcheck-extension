@@ -64,7 +64,6 @@ function showCommands() {
             selectedItem.command();
         }
     });
-
 }
 
 function runAnalysis() {

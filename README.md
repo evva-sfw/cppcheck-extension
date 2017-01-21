@@ -28,7 +28,7 @@ the correct location of the executable.
 
 ## Known Issues
 
-Detection of cppcheck is limited to the 32-bit Windows executable. Linux detection does not exist.
+Detection of cppcheck is limited to the 32-bit Windows executable and Linux. Mac detection does not exist.
 
 ## Release Notes
 
