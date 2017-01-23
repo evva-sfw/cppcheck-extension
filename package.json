@@ -6,6 +6,7 @@
   "author": "Matthew Ferreira",
   "publisher": "matthewferreira",
   "license": "MIT",
+  "icon": "cppcheck.png",
   "repository": {
     "type": "Git",
     "url": "https://github.com/matthewferreira/cppcheck-extension"
@@ -118,6 +119,7 @@
     "@types/node": "^6.0.40",
     "eslint": "^3.6.0",
     "mocha": "^2.3.3",
+    "os": "^0.1.1",
     "typescript": "^2.0.3",
     "vscode": "^1.0.0"
   },
