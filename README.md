@@ -1,6 +1,7 @@
 # cppcheck README
 
 This extension utilizes the cppcheck static code analyzer to provide C and C++ code analysis within Visual Studio Code.
+Cppcheck is available at `http://cppcheck.sourceforge.net`.
 
 ## Features
 
@@ -32,7 +33,11 @@ Detection of cppcheck is limited to the 32-bit Windows executable and Linux. Mac
 
 ## Release Notes
 
-Users appreciate release notes as you update your extension.
+### 0.0.2
+
+Updated to use the logo from cppcheck (as generously provided by Daniel Marjamäki), instead of blue on white.
+Added links to the cppcheck website and manual.
+Added a command for opening the cppcheck manual on the web.
 
 ### 0.0.1
 

@@ -8,6 +8,7 @@ import * as vscode from "vscode";
 import * as fs from "fs";
 import * as os from "os";
 import * as _ from "lodash";
+import * as opn from "opn";
 import * as pc from "./paramcheck";
 import * as an from "./analyzer";
 
@@ -26,10 +27,12 @@ export function activate(context: vscode.ExtensionContext) {
     const runAnalysis_d = vscode.commands.registerCommand("cppcheck.runAnalysis", runAnalysis);
     const runAnalysisAllFiles_d = vscode.commands.registerCommand("cppcheck.runAnalysisAllFiles", runAnalysisAllFiles);
     const showCommands_d = vscode.commands.registerCommand("cppcheck.showCommands", showCommands);
+    const readTheManual_d = vscode.commands.registerCommand("cppcheck.readTheManual", readTheManual);
 
     context.subscriptions.push(runAnalysis_d);
     context.subscriptions.push(runAnalysisAllFiles_d);
     context.subscriptions.push(showCommands_d);
+    context.subscriptions.push(readTheManual_d);
 
     statusItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, -1000);
     statusItem.text = "Cppcheck";
@@ -49,15 +52,20 @@ function doDispose(item: vscode.Disposable) {
     item.dispose();
 }
 
+function readTheManual(): Promise<void> {
+    opn("http://cppcheck.sourceforge.net/manual.pdf");
+    return Promise.resolve();
+}
+
 function showCommands() {
     interface CommandQuickPickItem extends vscode.QuickPickItem {
         command: () => Promise<void>;
     }
 
     let items: CommandQuickPickItem[] = [];
-
     items.push({ description: "Runs the analyzer on the current file.", label: "Analyze current file", detail: null, command: runAnalysis });
     items.push({ description: "Runs the analyzer on the entire workspace.", label: "Analyze workspace", detail: null, command: runAnalysisAllFiles });
+    items.push({ description: "Opens your web browser to the Cppcheck manual.", label: "Read the manual", detail: null, command: readTheManual });
 
     vscode.window.showQuickPick(items, { matchOnDetail: true, matchOnDescription: true }).then(selectedItem => {
         if (selectedItem && typeof selectedItem.command === "function") {
@@ -66,7 +74,7 @@ function showCommands() {
     });
 }
 
-function runAnalysis() {
+function runAnalysis(): Promise<void> {
     if (!fs.existsSync(config["cppcheckPath"])) {
         vscode.window.showErrorMessage("Cppcheck: Could not find cppcheck executable");
         return Promise.resolve();
@@ -87,14 +95,14 @@ function runAnalysis() {
     return Promise.resolve();
 }
 
-function runAnalysisAllFiles() {
+function runAnalysisAllFiles(): Promise<void> {
     if (!fs.existsSync(config["cppcheckPath"])) {
         vscode.window.showErrorMessage("Cppcheck: Could not find cppcheck executable");
         return Promise.resolve();
     }
 
     if (!vscode.workspace.rootPath) {
-        vscode.window.showErrorMessage("Cppcheck: A workspace must be opened.");
+        vscode.window.showErrorMessage("Cppcheck: A workspace must be open.");
         return Promise.resolve();
     }
 
