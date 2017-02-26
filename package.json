@@ -108,6 +108,11 @@
           "type": "boolean",
           "default": true,
           "description": "Whether to show a 'Cppcheck' item in the status bar for launching the static analyzer."
+        },
+        "cppcheck.showOutputAfterRunning": {
+            "type": "boolean",
+            "default": true,
+            "description": "Whether to show the 'Cppcheck' output channel after running the analyzer."
         }
       }
     }

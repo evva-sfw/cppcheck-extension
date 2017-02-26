@@ -23,6 +23,7 @@ export function activate(context: vscode.ExtensionContext) {
 
     outputChannel = vscode.window.createOutputChannel('Cppcheck');
     disposables.add(outputChannel);
+    outputChannel.appendLine('Cppcheck is running.');
 
     const runAnalysis_d = vscode.commands.registerCommand('cppcheck.runAnalysis', runAnalysis);
     const runAnalysisAllFiles_d = vscode.commands.registerCommand('cppcheck.runAnalysisAllFiles', runAnalysisAllFiles);
@@ -90,6 +91,10 @@ function runAnalysis(): Promise<void> {
     let workspaceDir = vscode.workspace.rootPath;
     let out = an.runOnFile(config, fileName, workspaceDir);
 
+    if (config['showOutputAfterRunning']) {
+        outputChannel.show();
+    }
+
     outputChannel.clear();
     outputChannel.appendLine(out);
     return Promise.resolve();
@@ -109,6 +114,10 @@ function runAnalysisAllFiles(): Promise<void> {
     let workspaceDir = vscode.workspace.rootPath;
     let out = an.runOnWorkspace(config, workspaceDir);
 
+    if (config['showOutputAfterRunning']) {
+        outputChannel.show();
+    }
+
     outputChannel.clear();
     outputChannel.appendLine(out);
     return Promise.resolve();
@@ -120,7 +129,7 @@ function findCppcheckPath(settings: vscode.WorkspaceConfiguration) {
     if (isNull(cppcheckPath)) {
         let p = platform();
         if (p === 'win32') {
-            var file = process.env['ProgramFiles'] + '\Cppcheck\cppcheck.exe';
+            var file = process.env['ProgramFiles'] + '\\Cppcheck\\cppcheck.exe';
             if (existsSync(file)) {
                 cppcheckPath = file;
             }
@@ -159,6 +168,7 @@ function configChanged() {
         config['undefine'] = settings.get('undefine', []);
         config['suppressions'] = settings.get('suppressions', []);
         config['verbose'] = settings.get('verbose', false);
+        config['showOutputAfterRunning'] = settings.get('showOutputAfterRunning', true);
 
         let standard = settings.get('standard', [ 'c11', 'c++11' ]);
         let outStandard: string[] = [];
