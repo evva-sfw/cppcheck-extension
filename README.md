@@ -33,12 +33,17 @@ Detection of cppcheck is limited to the 32-bit Windows executable and Linux. Mac
 
 ## Release Notes
 
+### 0.0.3
+
+- Added a new setting to automatically show the output channel after running cppcheck (true by default).
+- Fix for issue #1 (Doesn't do anything).
+
 ### 0.0.2
 
-Updated to use the logo from cppcheck (as generously provided by Daniel Marjamäki), instead of blue on white.
-Added links to the cppcheck website and manual.
-Added a command for opening the cppcheck manual on the web.
+- Updated to use the logo from cppcheck (as generously provided by Daniel Marjamäki), instead of blue on white.
+- Added links to the cppcheck website and manual.
+- Added a command for opening the cppcheck manual on the web.
 
 ### 0.0.1
 
-Initial release of cppcheck extension.
+- Initial release of cppcheck extension.
