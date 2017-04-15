@@ -113,6 +113,11 @@
             "type": "boolean",
             "default": true,
             "description": "Whether to show the 'Cppcheck' output channel after running the analyzer."
+        },
+        "cppcheck.lintingEnabled": {
+            "type": "boolean",
+            "default": false,
+            "description": "Whether to enable automatic linting for C/C++ code. Linting runs on workspace changes and file saves."
         }
       }
     }

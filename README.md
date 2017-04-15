@@ -26,6 +26,7 @@ the correct location of the executable.
 * `cppcheck.suppressions`: Any cppcheck rules to suppress (see the cppcheck manual).
 * `cppcheck.verbose`: Enable verbose output from cppcheck.
 * `cppcheck.showStatusBarItem`: Show/hide the status bar item for displaying analyzer commands.
+* `cppcheck.lintingEnabled`: Whether to enable automatic linting for C/C++ code. Linting runs on workspace changes and file saves.
 
 ## Known Issues
 

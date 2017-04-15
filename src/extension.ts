@@ -48,8 +48,7 @@ export function activate(context: vscode.ExtensionContext) {
     const configListener = vscode.workspace.onDidChangeConfiguration(configChanged);
     disposables.add(configListener);
 
-    vscode.workspace.onDidSaveTextDocument((() => Lint(diagnosticCollection, config)).bind(this));
-    lintInterval = setInterval((() => checkWorkspaceChanged()).bind(this), 1500);
+    vscode.workspace.onDidSaveTextDocument((() => lintIfEnabled()).bind(this));
 }
 
 export function deactivate() {
@@ -62,10 +61,16 @@ function doDispose(item: vscode.Disposable) {
     item.dispose();
 }
 
+function lintIfEnabled() {
+    if (config['lintingEnabled']) {
+        Lint(diagnosticCollection, config);
+    }
+}
+
 function checkWorkspaceChanged() {
     if (lastRootPath !== vscode.workspace.rootPath) {
         lastRootPath = vscode.workspace.rootPath;
-        Lint(diagnosticCollection, config);
+        lintIfEnabled();
     }
 }
 
@@ -185,6 +190,7 @@ function configChanged() {
         config['suppressions'] = settings.get('suppressions', []);
         config['verbose'] = settings.get('verbose', false);
         config['showOutputAfterRunning'] = settings.get('showOutputAfterRunning', true);
+        config['lintingEnabled'] = settings.get('lintingEnabled', false);
 
         let standard = settings.get('standard', [ 'c11', 'c++11' ]);
         let outStandard: string[] = [];
@@ -215,6 +221,12 @@ function configChanged() {
         }
         else {
             statusItem.hide();
+        }
+
+        if (config['lintingEnabled']) {
+            lintInterval = setInterval((() => checkWorkspaceChanged()).bind(this), 1500);
+        } else {
+            clearInterval(lintInterval);
         }
     }
 }
