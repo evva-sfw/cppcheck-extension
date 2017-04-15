@@ -11,14 +11,18 @@ import { each, isNull } from 'lodash';
 import * as opn from 'opn';
 import * as pc from './paramcheck';
 import * as an from './analyzer';
+import { Lint } from './linter';
 
 let disposables: Set<any>;
 let config: {[key:string]:any};
 let outputChannel: vscode.OutputChannel;
 let statusItem: vscode.StatusBarItem;
 
+let diagnosticCollection: vscode.DiagnosticCollection = vscode.languages.createDiagnosticCollection('cppcheck');
+let lastRootPath: string = '';
+let lintInterval: NodeJS.Timer;
+
 export function activate(context: vscode.ExtensionContext) {
-    console.log('Cppcheck now loaded');
     disposables = new Set();
 
     outputChannel = vscode.window.createOutputChannel('Cppcheck');
@@ -43,14 +47,26 @@ export function activate(context: vscode.ExtensionContext) {
     configChanged();
     const configListener = vscode.workspace.onDidChangeConfiguration(configChanged);
     disposables.add(configListener);
+
+    vscode.workspace.onDidSaveTextDocument((() => Lint(diagnosticCollection, config)).bind(this));
+    lintInterval = setInterval((() => checkWorkspaceChanged()).bind(this), 1500);
 }
 
 export function deactivate() {
+    clearInterval(lintInterval);
+    diagnosticCollection.dispose();
     each(disposables, doDispose);
 }
 
 function doDispose(item: vscode.Disposable) {
     item.dispose();
+}
+
+function checkWorkspaceChanged() {
+    if (lastRootPath !== vscode.workspace.rootPath) {
+        lastRootPath = vscode.workspace.rootPath;
+        Lint(diagnosticCollection, config);
+    }
 }
 
 function readTheManual(): Promise<void> {

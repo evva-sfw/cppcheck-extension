@@ -35,8 +35,6 @@ export function runOnWorkspace(config: {[key:string]:any}, workspaceDir: string)
 
 function runCppcheck(params: string[], config: {[key:string]:any}, workspaceDir: string) {
     let start = 'Cppcheck started: ' + new Date().toString();
-    console.log('Cppcheck: ' + config['cppcheckPath']);
-    console.log('Cppcheck: params = ' + params);
     let result = spawnSync(config['cppcheckPath'], params, { 'cwd': workspaceDir } );
     let stdout = '' + result.stdout;
     let stderr = '' + result.stderr;
