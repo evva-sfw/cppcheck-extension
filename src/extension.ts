@@ -85,9 +85,9 @@ function showCommands() {
     }
 
     let items: CommandQuickPickItem[] = [];
-    items.push({ description: 'Runs the analyzer on the current file.', label: 'Analyze current file', detail: null, command: runAnalysis });
-    items.push({ description: 'Runs the analyzer on the entire workspace.', label: 'Analyze workspace', detail: null, command: runAnalysisAllFiles });
-    items.push({ description: 'Opens your web browser to the Cppcheck manual.', label: 'Read the manual', detail: null, command: readTheManual });
+    items.push({ description: 'Runs the analyzer on the current file.', label: 'Analyze current file', command: runAnalysis });
+    items.push({ description: 'Runs the analyzer on the entire workspace.', label: 'Analyze workspace', command: runAnalysisAllFiles });
+    items.push({ description: 'Opens your web browser to the Cppcheck manual.', label: 'Read the manual', command: readTheManual });
 
     vscode.window.showQuickPick(items, { matchOnDetail: true, matchOnDescription: true }).then(selectedItem => {
         if (selectedItem && typeof selectedItem.command === 'function') {
@@ -227,6 +227,7 @@ function configChanged() {
             lintInterval = setInterval((() => checkWorkspaceChanged()).bind(this), 1500);
         } else {
             clearInterval(lintInterval);
+            diagnosticCollection.clear();
         }
     }
 }

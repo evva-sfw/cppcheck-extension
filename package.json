@@ -110,14 +110,14 @@
           "description": "Whether to show a 'Cppcheck' item in the status bar for launching the static analyzer."
         },
         "cppcheck.showOutputAfterRunning": {
-            "type": "boolean",
-            "default": true,
-            "description": "Whether to show the 'Cppcheck' output channel after running the analyzer."
+          "type": "boolean",
+          "default": true,
+          "description": "Whether to show the 'Cppcheck' output channel after running the analyzer."
         },
         "cppcheck.lintingEnabled": {
-            "type": "boolean",
-            "default": false,
-            "description": "Whether to enable automatic linting for C/C++ code. Linting runs on workspace changes and file saves."
+          "type": "boolean",
+          "default": false,
+          "description": "Whether to enable automatic linting for C/C++ code. Linting runs when opening a workspace or saving a file."
         }
       }
     }
@@ -128,24 +128,25 @@
     "build": "npm run compile",
     "build:watch": "tsc -watch -p ./",
     "postinstall": "node ./node_modules/vscode/bin/install",
+    "pkgvars": "node ./node_modules/vscode/bin/install",
     "test": "node ./node_modules/vscode/bin/test"
   },
   "devDependencies": {
-    "@types/lodash": "^4.14.50",
-    "@types/mocha": "^2.2.32",
-    "@types/node": "^6.0.40",
+    "@types/lodash": "^4.14.62",
+    "@types/mocha": "^2.2.40",
+    "@types/node": "^7.0.12",
     "@types/opn": "^3.0.28",
-    "eslint": "^3.6.0",
-    "mocha": "^2.3.3",
+    "eslint": "^3.19.0",
+    "mocha": "^3.2.0",
     "os": "^0.1.1",
-    "tslint": "^4.4.2",
-    "typescript": "^2.0.3",
-    "vscode": "^1.0.0"
+    "tslint": "^5.1.0",
+    "typescript": "^2.2.2",
+    "vscode": "^1.1.0"
   },
   "dependencies": {
     "child_process": "^1.0.2",
     "fs": "0.0.1-security",
-    "lodash": "^4.14.50",
+    "lodash": "^4.17.4",
     "opn": "^4.0.2",
     "os": "^0.1.1"
   }
