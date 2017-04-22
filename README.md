@@ -7,6 +7,7 @@ Cppcheck is available at `http://cppcheck.sourceforge.net`.
 
 - Run cppcheck for a single file.
 - Run cppcheck for the entire workspace.
+- On the fly linting within the code editor.
 
 ## Requirements
 
