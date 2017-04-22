@@ -9,6 +9,8 @@ Cppcheck is available at `http://cppcheck.sourceforge.net`.
 - Run cppcheck for the entire workspace.
 - On the fly linting within the code editor.
 
+![cppcheck linting](https://raw.githubusercontent.com/matthewferreira/cppcheck-extension/master/example.png)
+
 ## Requirements
 
 cppcheck must be installed. Any version may be used. The extension will try to locate the cppcheck executable if possible. It will search
