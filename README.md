@@ -37,6 +37,11 @@ Detection of cppcheck is limited to the 32-bit Windows executable and Linux. Mac
 
 ## Release Notes
 
+### 0.0.4
+
+- Added linting directly to the code editor.
+- Linting is listed in the Problems view for all files in the workspace.
+
 ### 0.0.3
 
 - Added a new setting to automatically show the output channel after running cppcheck (true by default).

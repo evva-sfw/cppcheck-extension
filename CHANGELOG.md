@@ -3,6 +3,10 @@ All notable changes to the "cppcheck" extension will be documented in this file.
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
+## [0.0.4] - 2017-04-22
+- Added linting directly to the code editor.
+- Linting is listed in the Problems view for all files in the workspace.
+
 ## [0.0.3] - 2017-02-26
 - Added a new setting to automatically show the output channel after running cppcheck (true by default).
 - Fix for issue #1 (Doesn't do anything).
