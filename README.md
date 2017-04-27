@@ -1,7 +1,6 @@
 # cppcheck README
 
 This extension utilizes the cppcheck static code analyzer to provide C and C++ code analysis within Visual Studio Code.
-Cppcheck is available at `http://cppcheck.sourceforge.net`.
 
 ## Features
 
@@ -13,9 +12,30 @@ Cppcheck is available at `http://cppcheck.sourceforge.net`.
 
 ## Requirements
 
-cppcheck must be installed. Any version may be used. The extension will try to locate the cppcheck executable if possible. It will search
-the 32-bit Program Files directory on Windows, and several bin directories on Linux. If not found, `cppcheck.cppcheckPath` must be set to
-the correct location of the executable.
+Cppcheck must be installed. Any version may be used. The extension will try to locate the `cppcheck` executable if possible. On Windows, it will search
+the 32-bit Program Files directory. On Linux and macOS, several bin directories will be searched.
+
+If `cppcheck` is not found, `cppcheck.cppcheckPath` must be set to the correct location of the executable.
+
+### Windows Installation
+
+Cppcheck is available for download at [`cppcheck.sourceforge.net`](http://cppcheck.sourceforge.net/).
+
+### Ubuntu Installation
+
+For Ubuntu users, Cppcheck is available via `apt-get`.
+
+```sh
+sudo apt-get install cppcheck
+```
+
+### macOS Installation
+
+For macOS users, Cppcheck can most easily be installed using [Homebrew](https://brew.sh/).
+
+```sh
+brew install cppcheck
+```
 
 ## Extension Settings
 
