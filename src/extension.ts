@@ -155,8 +155,8 @@ function findCppcheckPath(settings: vscode.WorkspaceConfiguration) {
                 cppcheckPath = file;
             }
         }
-        else if (p === 'linux') {
-            let attempts = [ '/usr/bin/cppcheck', '/usr/sbin/cppcheck', '/usr/share/bin/cppcheck' ];
+        else if (p === 'linux' || p === 'darwin') {
+            let attempts = [ '/usr/bin/cppcheck', '/usr/sbin/cppcheck', '/usr/share/bin/cppcheck', '/usr/local/bin/cppcheck' ];
             for (let index = 0; index < attempts.length; index++) {
                 if (existsSync(attempts[index])) {
                     cppcheckPath = attempts[index];

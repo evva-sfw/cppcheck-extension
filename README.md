@@ -31,10 +31,6 @@ the correct location of the executable.
 * `cppcheck.showStatusBarItem`: Show/hide the status bar item for displaying analyzer commands.
 * `cppcheck.lintingEnabled`: Whether to enable automatic linting for C/C++ code. Linting runs on workspace changes and file saves.
 
-## Known Issues
-
-Detection of cppcheck is limited to the 32-bit Windows executable and Linux. Mac detection does not exist.
-
 ## Release Notes
 
 ### 0.0.4
