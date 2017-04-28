@@ -2,7 +2,7 @@
   "name": "cppcheck",
   "displayName": "cppcheck",
   "description": "Invokes the 'cppcheck' static C++ code analyzer.",
-  "version": "0.0.4",
+  "version": "0.0.6",
   "author": "Matthew Ferreira",
   "publisher": "matthewferreira",
   "license": "MIT",
@@ -50,7 +50,7 @@
       "properties": {
         "cppcheck.enable": {
           "type": "boolean",
-          "default": false,
+          "default": true,
           "description": "Controls whether cppcheck is enabled for C++ files."
         },
         "cppcheck.cppcheckPath": {

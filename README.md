@@ -37,6 +37,12 @@ For macOS users, Cppcheck can most easily be installed using [Homebrew](https://
 brew install cppcheck
 ```
 
+### Linting
+
+The linter can be enabled by setting 'cppcheck.lintingEnabled' to true. This can be done either
+globally in user settings, or per-workspace in workspace settings. The current recommendation is
+to enable linting per-workspace.
+
 ## Extension Settings
 
 * `cppcheck.enable`: Enable/disable the analyzer.
@@ -53,9 +59,20 @@ brew install cppcheck
 
 ## Release Notes
 
+### 0.0.6
+
+- Actually changed 'cppcheck.enabled' to true instead of just saying it.
+
+### 0.0.5
+
+- macOS executable detection (thanks to Jason Dreyzehner).
+- Changed 'cppcheck.enabled' to true.
+- Better documentation about installation (thanks to Jason Dreyzehner).
+- Documentation about enabling the linter.
+
 ### 0.0.4
 
-- Added linting directly to the code editor.
+- Added linting directly to the code editor (thanks to Andreas Pazureck).
 - Linting is listed in the Problems view for all files in the workspace.
 
 ### 0.0.3

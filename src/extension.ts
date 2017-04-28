@@ -174,7 +174,7 @@ function configChanged() {
     let settings = vscode.workspace.getConfiguration('cppcheck');
 
     if (settings) {
-        let enable = settings.get('enable', false);
+        let enable = settings.get('enable', true);
         var cppcheckPath = findCppcheckPath(settings);
 
         if (!existsSync(cppcheckPath)) {
