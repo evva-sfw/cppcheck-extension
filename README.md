@@ -13,7 +13,7 @@ This extension utilizes the cppcheck static code analyzer to provide C and C++ c
 ## Requirements
 
 Cppcheck must be installed. Any version may be used. The extension will try to locate the `cppcheck` executable if possible. On Windows, it will search
-the 32-bit Program Files directory. On Linux and macOS, several bin directories will be searched.
+the 32-bit and 64-bit Program Files directories. On Linux and macOS, several bin directories will be searched.
 
 If `cppcheck` is not found, `cppcheck.cppcheckPath` must be set to the correct location of the executable.
 
@@ -58,6 +58,10 @@ to enable linting per-workspace.
 * `cppcheck.lintingEnabled`: Whether to enable automatic linting for C/C++ code. Linting runs on workspace changes and file saves.
 
 ## Release Notes
+
+### 0.0.7
+
+- Windows 64-bit executable detection (always looks in '%sytemdrive%\Program Files\Cppcheck').
 
 ### 0.0.6
 

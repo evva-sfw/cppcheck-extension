@@ -7,6 +7,7 @@
 import * as vscode from 'vscode';
 import { existsSync } from 'fs';
 import { platform } from 'os';
+import { join } from 'path';
 import { each, isNull } from 'lodash';
 import * as opn from 'opn';
 import * as pc from './paramcheck';
@@ -150,9 +151,13 @@ function findCppcheckPath(settings: vscode.WorkspaceConfiguration) {
     if (isNull(cppcheckPath)) {
         let p = platform();
         if (p === 'win32') {
-            var file = process.env['ProgramFiles'] + '\\Cppcheck\\cppcheck.exe';
+            let file = join(process.env['ProgramFiles'], 'Cppcheck', 'cppcheck.exe');
+            // hard coded basically, but at least it can work
+            let file64 = join(process.env.systemdrive, 'Program Files', 'Cppcheck', 'cppcheck.exe');
             if (existsSync(file)) {
                 cppcheckPath = file;
+            } else if (existsSync(file64)) {
+                cppcheckPath = file64;
             }
         }
         else if (p === 'linux' || p === 'darwin') {

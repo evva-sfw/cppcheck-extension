@@ -3,6 +3,9 @@ All notable changes to the "cppcheck" extension will be documented in this file.
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
+## [0.0.7] - 2017-04-30
+- Windows 64-bit executable detection (always looks in '%sytemdrive%\Program Files\Cppcheck').
+
 ## [0.0.6] - 2017-04-27
 - Actually changed 'cppcheck.enabled' to true instead of just saying it.
 
