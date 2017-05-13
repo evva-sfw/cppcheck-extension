@@ -7,7 +7,7 @@
 import * as vscode from 'vscode';
 import * as fs from 'fs';
 import * as path from 'path';
-import { runOnWorkspace } from './analyzer';
+import { runLintMode } from './analyzer';
 
 function getCorrectFileName(p: string): string {
     if (!fs.existsSync(p)) {
@@ -38,7 +38,7 @@ export function Lint(diagnosticCollection: vscode.DiagnosticCollection, config: 
 
     // 1 = path, 2 = line, 3 = severity, 4 = message
     let regex = /^(?:\[([\w:\\/.-]+):(\d+)]: )?\((\w+)\) ([\s\S]+?)\n/gm;
-    let cppcheckOutput = runOnWorkspace(config, vscode.workspace.rootPath);
+    let cppcheckOutput = runLintMode(config, vscode.workspace.rootPath);
     let regexArray: RegExpExecArray;
     let fileData: {[key:string]:RegExpExecArray[]} = {};
     while (regexArray = regex.exec(cppcheckOutput)) {

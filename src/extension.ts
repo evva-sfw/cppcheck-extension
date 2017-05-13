@@ -29,6 +29,7 @@ export function activate(context: vscode.ExtensionContext) {
     outputChannel = vscode.window.createOutputChannel('Cppcheck');
     disposables.add(outputChannel);
     outputChannel.appendLine('Cppcheck is running.');
+    an.setOutputChannel(outputChannel);
 
     const runAnalysis_d = vscode.commands.registerCommand('cppcheck.runAnalysis', runAnalysis);
     const runAnalysisAllFiles_d = vscode.commands.registerCommand('cppcheck.runAnalysisAllFiles', runAnalysisAllFiles);
@@ -196,6 +197,7 @@ function configChanged() {
         config['verbose'] = settings.get('verbose', false);
         config['showOutputAfterRunning'] = settings.get('showOutputAfterRunning', true);
         config['lintingEnabled'] = settings.get('lintingEnabled', false);
+        config['outputCommandLine'] = settings.get('outputCommandLine', false);
 
         let standard = settings.get('standard', [ 'c11', 'c++11' ]);
         let outStandard: string[] = [];

@@ -2,7 +2,7 @@
   "name": "cppcheck",
   "displayName": "cppcheck",
   "description": "Invokes the 'cppcheck' static C++ code analyzer.",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "author": "Matthew Ferreira",
   "publisher": "matthewferreira",
   "license": "MIT",
@@ -118,6 +118,11 @@
           "type": "boolean",
           "default": false,
           "description": "Whether to enable automatic linting for C/C++ code. Linting runs when opening a workspace or saving a file."
+        },
+        "cppcheck.outputCommandLine": {
+            "type": "boolean",
+            "default": false,
+            "description": "Whether to output the command line used to invoke Cppcheck."
         }
       }
     }
@@ -148,6 +153,8 @@
     "fs": "0.0.1-security",
     "lodash": "^4.17.4",
     "opn": "^4.0.2",
-    "os": "^0.1.1"
+    "os": "^0.1.1",
+    "slash": "^1.0.0",
+    "var-expansion": "^0.1.0"
   }
 }

@@ -3,6 +3,10 @@ All notable changes to the "cppcheck" extension will be documented in this file.
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
+## [0.0.8] - 2017-05-13
+- Fix for issue #5 (environment variables).
+- Fixed the linter not working when 'cppcheck.verbose' is true.
+
 ## [0.0.7] - 2017-04-30
 - Windows 64-bit executable detection (always looks in '%sytemdrive%\Program Files\Cppcheck').
 

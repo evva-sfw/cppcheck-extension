@@ -56,8 +56,19 @@ to enable linting per-workspace.
 * `cppcheck.verbose`: Enable verbose output from cppcheck.
 * `cppcheck.showStatusBarItem`: Show/hide the status bar item for displaying analyzer commands.
 * `cppcheck.lintingEnabled`: Whether to enable automatic linting for C/C++ code. Linting runs on workspace changes and file saves.
+* `cppcheck.outputCommandLine`: Whether to output the command line used to invoke Cppcheck.
+
+### A quick note on paths
+
+When using the `includePaths` setting, variables will be expanded once. Anything embedded will be used as is. In addition to
+any environment variable being expanded, `${workspaceRoot}` will also be expanded.
 
 ## Release Notes
+
+### 0.0.8
+
+- Fix for issue #5 (environment variables).
+- Fixed the linter not working when 'cppcheck.verbose' is true.
 
 ### 0.0.7
 
