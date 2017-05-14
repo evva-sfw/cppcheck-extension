@@ -54,6 +54,7 @@ to enable linting per-workspace.
 * `cppcheck.undefine`: Symbols to undefine for the preprocessor.
 * `cppcheck.suppressions`: Any cppcheck rules to suppress (see the cppcheck manual).
 * `cppcheck.verbose`: Enable verbose output from cppcheck.
+* `cppcheck.force`: Enable forcefully analyzing all possible configurations through cppcheck.
 * `cppcheck.showStatusBarItem`: Show/hide the status bar item for displaying analyzer commands.
 * `cppcheck.lintingEnabled`: Whether to enable automatic linting for C/C++ code. Linting runs on workspace changes and file saves.
 * `cppcheck.outputCommandLine`: Whether to output the command line used to invoke Cppcheck.

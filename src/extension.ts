@@ -195,6 +195,7 @@ function configChanged() {
         config['undefine'] = settings.get('undefine', []);
         config['suppressions'] = settings.get('suppressions', []);
         config['verbose'] = settings.get('verbose', false);
+        config['force'] = settings.get('force', false);
         config['showOutputAfterRunning'] = settings.get('showOutputAfterRunning', true);
         config['lintingEnabled'] = settings.get('lintingEnabled', false);
         config['outputCommandLine'] = settings.get('outputCommandLine', false);
