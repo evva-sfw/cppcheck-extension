@@ -65,6 +65,10 @@ any environment variable being expanded, `${workspaceRoot}` will also be expande
 
 ## Release Notes
 
+### 0.0.9
+
+- Merged in pull #6 (configurable severity levels) (thanks to Andreas Pazureck).
+
 ### 0.0.8
 
 - Fix for issue #5 (environment variables).

@@ -198,6 +198,14 @@ function configChanged() {
         config['showOutputAfterRunning'] = settings.get('showOutputAfterRunning', true);
         config['lintingEnabled'] = settings.get('lintingEnabled', false);
         config['outputCommandLine'] = settings.get('outputCommandLine', false);
+        config['severityLevels'] = settings.get('severityLevels', {
+            error: 'Error',
+            warning: 'Warning',
+            style: 'Information',
+            performance: 'Warning',
+            portability: 'Warning',
+            information: 'Information'
+        });
 
         let standard = settings.get('standard', [ 'c11', 'c++11' ]);
         let outStandard: string[] = [];
@@ -230,10 +238,11 @@ function configChanged() {
             statusItem.hide();
         }
 
+        clearInterval(lintInterval);
         if (config['lintingEnabled']) {
+            lintIfEnabled();
             lintInterval = setInterval((() => checkWorkspaceChanged()).bind(this), 1500);
         } else {
-            clearInterval(lintInterval);
             diagnosticCollection.clear();
         }
     }

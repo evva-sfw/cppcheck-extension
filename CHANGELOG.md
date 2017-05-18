@@ -3,6 +3,9 @@ All notable changes to the "cppcheck" extension will be documented in this file.
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
+## [0.0.9] - 2017-05-16
+- Merged in pull #6 (configurable severity levels) (thanks to Andreas Pazureck).
+
 ## [0.0.8] - 2017-05-13
 - Fix for issue #5 (environment variables).
 - Fixed the linter not working when 'cppcheck.verbose' is true.
