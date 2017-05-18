@@ -3,8 +3,9 @@ All notable changes to the "cppcheck" extension will be documented in this file.
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
-## [0.0.9] - 2017-05-16
+## [0.0.9] - 2017-05-17
 - Merged in pull #6 (configurable severity levels) (thanks to Andreas Pazureck).
+- Merged in pull #8 (force option) (thanks to Joseph Benden).
 
 ## [0.0.8] - 2017-05-13
 - Fix for issue #5 (environment variables).

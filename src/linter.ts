@@ -29,9 +29,13 @@ function getCorrectFileName(p: string): string {
     return p;
 }
 
-function cppcheckSeverityToDiagnosticSeverity(severity: string, config: SeverityMaps): vscode.DiagnosticSeverity {
+function cppcheckSeverityToDiagnosticSeverity(severity: string, config: SeverityMaps): vscode.DiagnosticSeverity | Boolean {
     const cpplevel = (<any>config)[severity] as string;
-    return (<any>vscode.DiagnosticSeverity)[cpplevel] as vscode.DiagnosticSeverity;
+    if (cpplevel === 'None') {
+        return false;
+    } else {
+        return (<any>vscode.DiagnosticSeverity)[cpplevel] as vscode.DiagnosticSeverity;
+    }
 }
 
 export function Lint(diagnosticCollection: vscode.DiagnosticCollection, config: {[key:string]:any}) {
@@ -69,10 +73,15 @@ export function Lint(diagnosticCollection: vscode.DiagnosticCollection, config: 
 
                 let l = doc.lineAt(line);
                 let r = new vscode.Range(line, l.text.match(/\S/).index, line, l.text.length);
-                let level = cppcheckSeverityToDiagnosticSeverity(severity, config['severityLevels'] as SeverityMaps) || vscode.DiagnosticSeverity.Information;
-                let d = new vscode.Diagnostic(r, `(${severity}) ${message}`, level);
-                d.source = 'cppcheck';
-                diagnostics.push(d);
+                let level = cppcheckSeverityToDiagnosticSeverity(severity, config['severityLevels'] as SeverityMaps);
+                if (level === undefined) {
+                     level = vscode.DiagnosticSeverity.Information;
+                }
+                if (level !== false) {
+                    let d = new vscode.Diagnostic(r, `(${severity}) ${message}`, <vscode.DiagnosticSeverity>level);
+                    d.source = 'cppcheck';
+                    diagnostics.push(d);
+                }
             }
             diagnosticCollection.set(doc.uri, diagnostics);
         });

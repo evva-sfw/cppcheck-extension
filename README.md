@@ -58,6 +58,8 @@ to enable linting per-workspace.
 * `cppcheck.showStatusBarItem`: Show/hide the status bar item for displaying analyzer commands.
 * `cppcheck.lintingEnabled`: Whether to enable automatic linting for C/C++ code. Linting runs on workspace changes and file saves.
 * `cppcheck.outputCommandLine`: Whether to output the command line used to invoke Cppcheck.
+* `cppcheck.force`: Controls whether cppcheck enumerates all possible configurations.
+* `cppcheck.severityLevels`: Maps the severity levels of cppcheck to VSCode severity levels (Error, Warning, Information, Hint). Setting to 'None' will not show the severity type at all.
 
 ### A quick note on paths
 
@@ -69,6 +71,7 @@ any environment variable being expanded, `${workspaceRoot}` will also be expande
 ### 0.0.9
 
 - Merged in pull #6 (configurable severity levels) (thanks to Andreas Pazureck).
+- Merged in pull #8 (force option) (thanks to Joseph Benden).
 
 ### 0.0.8
 

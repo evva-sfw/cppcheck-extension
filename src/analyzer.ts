@@ -55,12 +55,11 @@ export function runLintMode(config: {[key:string]:any}, workspaceDir: string) {
 
 function runCppcheck(params: string[], config: {[key:string]:any}, workspaceDir: string) {
     let start = 'Cppcheck started: ' + new Date().toString();
-    let runArgs = 'Running with: ' + params.join(' ');
     let result = spawnSync(config['cppcheckPath'], params, { 'cwd': workspaceDir } );
     let stdout = '' + result.stdout;
     let stderr = '' + result.stderr;
     let end = 'Cppcheck ended: ' + new Date().toString();
-    let resultsArray = [start, runArgs, stdout, stderr, end];
+    let resultsArray = [start, stdout, stderr, end];
 
     if (config['outputCommandLine']) {
         let commandLine = `${config['cppcheckPath']} ${params.join(' ')}`;
