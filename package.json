@@ -104,6 +104,11 @@
           "default": false,
           "description": "Whether to enable verbose output from 'cppcheck'."
         },
+        "cppcheck.force": {
+          "type": "boolean",
+          "default": false,
+          "description": "Controls whether cppcheck enumerates all possible configurations."
+        },
         "cppcheck.showStatusBarItem": {
           "type": "boolean",
           "default": true,
