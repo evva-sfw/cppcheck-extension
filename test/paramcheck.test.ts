@@ -15,6 +15,9 @@ function paramcheckTests() {
 
     test('isValidPlatform: bad platform', testIsValidPlatform_BadPlatform);
     test('isValidPlatform: allowed platforms', testIsValidPlatform_AllowedPlatforms);
+
+    test('isValidLanguage: bad language', testIsValidLanguage_BadLanguage);
+    test('isValidLanguage: allowed languages', testIsValidLanguage_AllowedLanguages);
 }
 
 function testIsValidStandard_BadStandard() {
@@ -38,5 +41,19 @@ function testIsValidPlatform_AllowedPlatforms() {
     for (let index = 0; index < allowedPlatforms.length; index++) {
         let element = allowedPlatforms[index];
         assert.strictEqual(pc.isValidPlatform(element), true);
+    }
+}
+
+function testIsValidLanguage_BadLanguage() {
+    assert.strictEqual(pc.isValidLanguage('Pascal'), false);
+    assert.strictEqual(pc.isValidLanguage('HTML'), false);
+    assert.strictEqual(pc.isValidLanguage('Visual Basic'), false);
+}
+
+function testIsValidLanguage_AllowedLanguages() {
+    const allowLanguages = [ 'c', 'c++' ];
+    for (let index = 0; index < allowLanguages.length; index++) {
+        let element = allowLanguages[index];
+        assert.strictEqual(pc.isValidLanguage(element), true);
     }
 }

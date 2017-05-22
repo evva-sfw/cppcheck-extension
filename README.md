@@ -59,6 +59,8 @@ to enable linting per-workspace.
 * `cppcheck.lintingEnabled`: Whether to enable automatic linting for C/C++ code. Linting runs on workspace changes and file saves.
 * `cppcheck.outputCommandLine`: Whether to output the command line used to invoke Cppcheck.
 * `cppcheck.force`: Controls whether cppcheck enumerates all possible configurations.
+* `cppcheck.language`: Force 'cppcheck' to check all files as the given language.
+* `cppcheck.inconclusive`: Allow reporting even though analysis is inconclusive. May lead to false positives.
 * `cppcheck.severityLevels`: Maps the severity levels of cppcheck to VSCode severity levels (Error, Warning, Information, Hint). Setting to 'None' will not show the severity type at all.
 
 ### A quick note on paths
@@ -67,6 +69,11 @@ When using the `includePaths` setting, variables will be expanded once. Anything
 any environment variable being expanded, `${workspaceRoot}` will also be expanded.
 
 ## Release Notes
+
+### 0.1.1
+
+- Feature request #9 (language parameter).
+- Added the '--inconclusive' parameter.
 
 ### 0.0.9
 

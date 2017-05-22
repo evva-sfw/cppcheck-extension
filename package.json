@@ -2,7 +2,7 @@
   "name": "cppcheck",
   "displayName": "cppcheck",
   "description": "Invokes the 'cppcheck' static C++ code analyzer.",
-  "version": "0.0.9",
+  "version": "0.1.1",
   "author": "Matthew Ferreira",
   "publisher": "matthewferreira",
   "license": "MIT",
@@ -103,6 +103,17 @@
           "type": "boolean",
           "default": false,
           "description": "Whether to enable verbose output from 'cppcheck'."
+        },
+        "cppcheck.language": {
+            "type":"string",
+            "default": "c++",
+            "enum": [ "c", "c++" ],
+            "description": "Force 'cppcheck' to check all files as the given language."
+        },
+        "cppcheck.inconclusive": {
+            "type": "boolean",
+            "default": false,
+            "description": "Allow reporting even though analysis is inconclusive. May lead to false positives."
         },
         "cppcheck.force": {
           "type": "boolean",

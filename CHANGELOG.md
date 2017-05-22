@@ -3,6 +3,10 @@ All notable changes to the "cppcheck" extension will be documented in this file.
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
+## [0.1.1] - 2017-05-21
+- Feature request #9 (language parameter).
+- Added the '--inconclusive' parameter.
+
 ## [0.0.9] - 2017-05-17
 - Merged in pull #6 (configurable severity levels) (thanks to Andreas Pazureck).
 - Merged in pull #8 (force option) (thanks to Joseph Benden).

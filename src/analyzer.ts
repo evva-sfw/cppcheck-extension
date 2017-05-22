@@ -79,12 +79,14 @@ function getCppcheckParameters(config: {[key:string]:any}, unusedFunction: boole
     let defineParams = getDefineParams(config);
     let undefineParams = getUndefineParams(config);
     let suppressionParams = getSuppressionParams(config);
+    let languageParam = getLanguageParam(config);
     let params = enableParams
                     .concat(includeParams)
                     .concat(standardParams)
                     .concat(defineParams)
                     .concat(undefineParams)
-                    .concat(suppressionParams);
+                    .concat(suppressionParams)
+                    .concat(languageParam);
     let platformParams = getPlatformParams(config);
     params.push(platformParams);
 
@@ -94,6 +96,10 @@ function getCppcheckParameters(config: {[key:string]:any}, unusedFunction: boole
 
     if (config['force'] === true) {
         params.push('--force');
+    }
+
+    if (config['inconclusive'] === true) {
+        params.push('--inconclusive');
     }
 
     return params;
@@ -202,6 +208,17 @@ function getSuppressionParams(config: {[key:string]:any}) {
         each(suppressions, (element: string) => {
             params.push(`--suppress=${element}`);
         });
+    }
+
+    return params;
+}
+
+function getLanguageParam(config: {[key:string]:any}) {
+    let language = config['language'];
+    let params: string[] = [];
+
+    if (pc.isValidLanguage(language)) {
+        params.push(`--language=${language}`);
     }
 
     return params;

@@ -15,3 +15,8 @@ export function isValidPlatform(platform: string): boolean {
     const allowedPlatforms = [ 'unix32', 'unix64', 'win32A', 'win32W', 'win64', 'native' ];
     return includes(allowedPlatforms, platform);
 }
+
+export function isValidLanguage(language: string): boolean {
+    const allowLanguages = [ 'c', 'c++' ];
+    return includes(allowLanguages, language);
+}

@@ -196,6 +196,8 @@ function configChanged() {
         config['suppressions'] = settings.get('suppressions', []);
         config['verbose'] = settings.get('verbose', false);
         config['force'] = settings.get('force', false);
+        config['language'] = settings.get('language', 'c++');
+        config['inconclusive'] = settings.get('inconclusive', false);
         config['showOutputAfterRunning'] = settings.get('showOutputAfterRunning', true);
         config['lintingEnabled'] = settings.get('lintingEnabled', false);
         config['outputCommandLine'] = settings.get('outputCommandLine', false);
