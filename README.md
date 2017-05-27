@@ -12,8 +12,9 @@ This extension utilizes the cppcheck static code analyzer to provide C and C++ c
 
 ## Requirements
 
-Cppcheck must be installed. Any version may be used. The extension will try to locate the `cppcheck` executable if possible. On Windows, it will search
-the 32-bit and 64-bit Program Files directories. On Linux and macOS, several bin directories will be searched.
+Cppcheck must be installed. Any version may be used. The extension will try to locate the `cppcheck` executable if
+possible. On Windows, it will search the 32-bit and 64-bit Program Files directories. On Linux and macOS, several
+bin directories will be searched.
 
 If `cppcheck` is not found, `cppcheck.cppcheckPath` must be set to the correct location of the executable.
 
@@ -39,9 +40,8 @@ brew install cppcheck
 
 ### Linting
 
-The linter can be enabled by setting 'cppcheck.lintingEnabled' to true. This can be done either
-globally in user settings, or per-workspace in workspace settings. The current recommendation is
-to enable linting per-workspace.
+The linter can be enabled by setting 'cppcheck.lintingEnabled' to true. This can be done either globally in user
+settings, or per-workspace in workspace settings. The current recommendation is to enable linting per-workspace.
 
 ## Extension Settings
 
@@ -58,17 +58,21 @@ to enable linting per-workspace.
 * `cppcheck.showStatusBarItem`: Show/hide the status bar item for displaying analyzer commands.
 * `cppcheck.lintingEnabled`: Whether to enable automatic linting for C/C++ code. Linting runs on workspace changes and file saves.
 * `cppcheck.outputCommandLine`: Whether to output the command line used to invoke Cppcheck.
-* `cppcheck.force`: Controls whether cppcheck enumerates all possible configurations.
 * `cppcheck.language`: Force 'cppcheck' to check all files as the given language.
 * `cppcheck.inconclusive`: Allow reporting even though analysis is inconclusive. May lead to false positives.
 * `cppcheck.severityLevels`: Maps the severity levels of cppcheck to VSCode severity levels (Error, Warning, Information, Hint). Setting to 'None' will not show the severity type at all.
 
 ### A quick note on paths
 
-When using the `includePaths` setting, variables will be expanded once. Anything embedded will be used as is. In addition to
-any environment variable being expanded, `${workspaceRoot}` will also be expanded.
+When using the `includePaths` setting, variables will be expanded once. Anything embedded will be used as is.
+In addition to any environment variable being expanded, `${workspaceRoot}` will also be expanded.
 
 ## Release Notes
+
+### 0.1.2
+
+- Cleaned up the README.
+- Merged in pull #10.
 
 ### 0.1.1
 
