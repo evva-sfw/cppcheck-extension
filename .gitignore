@@ -6,3 +6,4 @@ out/**
 out/**/
 out
 *.vsix
+notes.ignoredbygit.txt

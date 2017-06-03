@@ -69,6 +69,12 @@ In addition to any environment variable being expanded, `${workspaceRoot}` will 
 
 ## Release Notes
 
+### 0.1.3
+
+- Reverted pull #10 via pull #11.
+- Merged in pull #12 (paths with spaces and special characters) (thanks to Roelof).
+- Fix for issues #7 via pull #12.
+
 ### 0.1.2
 
 - Cleaned up the README.

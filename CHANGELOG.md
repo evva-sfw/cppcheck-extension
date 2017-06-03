@@ -3,7 +3,12 @@ All notable changes to the "cppcheck" extension will be documented in this file.
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
-## [0.1.2] - FUTURE
+## [0.1.3] - 2017-06-03
+- Reverted pull #10 via pull #11.
+- Merged in pull #12 (paths with spaces and special characters) (thanks to Roelof).
+- Fix for issues #7 via pull #12.
+
+## [0.1.2] - 2017-06-01 (internal version)
 - Cleaned up the README.
 - Merged in pull #10.
 

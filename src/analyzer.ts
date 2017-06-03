@@ -70,7 +70,7 @@ function runCppcheck(params: string[], config: {[key:string]:any}, workspaceDir:
     return out;
 }
 
-function getCppcheckParameters(config: {[key:string]:any}, unusedFunction: boolean, useVerbose: boolean) {
+function getCppcheckParameters(config: {[key:string]:any}, unusedFunction: boolean, lintMode: boolean) {
     let enableParams = unusedFunction
                         ? [ '--enable=warning,style,performance,portability,information,unusedFunction' ]
                         : [ '--enable=warning,style,performance,portability,information' ];
@@ -90,7 +90,7 @@ function getCppcheckParameters(config: {[key:string]:any}, unusedFunction: boole
     let platformParams = getPlatformParams(config);
     params.push(platformParams);
 
-    if (useVerbose && config['verbose'] === true) {
+    if (!lintMode && config['verbose'] === true) {
         params.push('--verbose');
     }
 
@@ -98,7 +98,7 @@ function getCppcheckParameters(config: {[key:string]:any}, unusedFunction: boole
         params.push('--force');
     }
 
-    if (config['inconclusive'] === true) {
+    if (!lintMode && config['inconclusive'] === true) {
         params.push('--inconclusive');
     }
 
