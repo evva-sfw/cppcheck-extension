@@ -42,7 +42,7 @@ export function Lint(diagnosticCollection: vscode.DiagnosticCollection, config: 
     diagnosticCollection.clear();
 
     // 1 = path, 2 = line, 3 = severity, 4 = message
-    let regex = /^(?:\[([\w:\\/.-]+):(\d+)]: )?\((\w+)\) ([\s\S]+?)\n/gm;
+    let regex = /^(?:\[([\w\W][^\]]+):(\d+)]: )?\((\w+)\) ([\s\S]+?)\n/gm;
     let cppcheckOutput = runLintMode(config, vscode.workspace.rootPath);
     let regexArray: RegExpExecArray;
     let fileData: {[key:string]:RegExpExecArray[]} = {};
