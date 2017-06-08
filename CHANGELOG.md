@@ -3,6 +3,12 @@ All notable changes to the "cppcheck" extension will be documented in this file.
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
+## [0.2.1] - FUTURE
+- Changed the 'Read the manual' command to go to the HTML manual instead of PDF.
+- Fixed improper 'inconclusive' and 'verbose' parameter handling.
+- Added 'allowInlineSuppressions' as an option, enabled by default.
+- Brand new linting engine, with support for inline suppressions.
+
 ## [0.1.3] - 2017-06-03
 - Reverted pull #10 via pull #11.
 - Merged in pull #12 (paths with spaces and special characters) (thanks to Roelof).

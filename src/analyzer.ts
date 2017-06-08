@@ -12,54 +12,53 @@ const slash = require('slash'); // no types available
 import * as pc from './paramcheck';
 
 let outputChannel: vscode.OutputChannel;
-export function setOutputChannel(channel: vscode.OutputChannel) {
+export function setOutputChannel(channel: vscode.OutputChannel): void {
     outputChannel = channel;
 }
 
-export function runOnFile(config: {[key:string]:any}, fileName: string, workspaceDir: string) {
+export function runOnFile(config: {[key:string]:any}, fileName: string, workspaceDir: string): string {
     if (!config['enable']) {
         vscode.window.showInformationMessage('Cppcheck is not enabled.');
         return undefined;
     }
 
-    let params = getCppcheckParameters(config, false, true);
-    params.push(fileName);
+    let params = getCppcheckParameters(config, false, false);
+    params.push(`"${fileName}"`);
     let out = runCppcheck(params, config, workspaceDir);
     return out;
 }
 
-export function runOnWorkspace(config: {[key:string]:any}, workspaceDir: string) {
-    if (!config['enable']) {
-        vscode.window.showInformationMessage('Cppcheck is not enabled.');
-        return undefined;
-    }
-
-    let params = getCppcheckParameters(config, true, true);
-    params.push(workspaceDir);
-    let out = runCppcheck(params, config, workspaceDir);
-    return out;
-}
-
-/** The only difference between this and 'runOnWorkspace' is that the 'verbose' parameter is never used. */
-export function runLintMode(config: {[key:string]:any}, workspaceDir: string) {
+export function runOnWorkspace(config: {[key:string]:any}, workspaceDir: string): string {
     if (!config['enable']) {
         vscode.window.showInformationMessage('Cppcheck is not enabled.');
         return undefined;
     }
 
     let params = getCppcheckParameters(config, true, false);
-    params.push(workspaceDir);
+    params.push(`"${workspaceDir}"`);
     let out = runCppcheck(params, config, workspaceDir);
     return out;
 }
 
-function runCppcheck(params: string[], config: {[key:string]:any}, workspaceDir: string) {
+/** Lint mode does not append 'inconslusive' or 'verbose' to the command line, even if the options are set. */
+export function runLintMode(config: {[key:string]:any}, workspaceDir: string): string {
+    if (!config['enable']) {
+        vscode.window.showInformationMessage('Cppcheck is not enabled.');
+        return undefined;
+    }
+
+    let params = getCppcheckParameters(config, true, true);
+    params.push('--xml-version=2');
+    params.push(`"${workspaceDir}"`);
+    let out = spawnSync(config['cppcheckPath'], params, { 'cwd' : workspaceDir }).stderr.toString('utf8');
+    return out;
+}
+
+function runCppcheck(params: string[], config: {[key:string]:any}, workspaceDir: string): string {
     let start = 'Cppcheck started: ' + new Date().toString();
-    let result = spawnSync(config['cppcheckPath'], params, { 'cwd': workspaceDir } );
-    let stdout = '' + result.stdout;
-    let stderr = '' + result.stderr;
+    let result = spawnSync(config['cppcheckPath'], params, { 'cwd': workspaceDir });
     let end = 'Cppcheck ended: ' + new Date().toString();
-    let resultsArray = [start, stdout, stderr, end];
+    let resultsArray: string[] = [start, result.stdout.toString('utf8'), result.stderr.toString('utf8'), end];
 
     if (config['outputCommandLine']) {
         let commandLine = `${config['cppcheckPath']} ${params.join(' ')}`;
@@ -70,7 +69,7 @@ function runCppcheck(params: string[], config: {[key:string]:any}, workspaceDir:
     return out;
 }
 
-function getCppcheckParameters(config: {[key:string]:any}, unusedFunction: boolean, lintMode: boolean) {
+function getCppcheckParameters(config: {[key:string]:any}, unusedFunction: boolean, lintMode: boolean): string[] {
     let enableParams = unusedFunction
                         ? [ '--enable=warning,style,performance,portability,information,unusedFunction' ]
                         : [ '--enable=warning,style,performance,portability,information' ];
@@ -98,6 +97,10 @@ function getCppcheckParameters(config: {[key:string]:any}, unusedFunction: boole
         params.push('--force');
     }
 
+    if (config['allowInlineSuppressions'] === true) {
+        params.push('--inline-suppr');
+    }
+
     if (!lintMode && config['inconclusive'] === true) {
         params.push('--inconclusive');
     }
@@ -105,7 +108,7 @@ function getCppcheckParameters(config: {[key:string]:any}, unusedFunction: boole
     return params;
 }
 
-function getIncludeParams(config: {[key:string]:any}) {
+function getIncludeParams(config: {[key:string]:any}): string[] {
     let paths = config['includePaths'];
     let params: string[] = [];
 
@@ -141,7 +144,7 @@ function expandVariables(str: string): IExpansionResult {
     }
 }
 
-function getPlatformParams(config: {[key:string]:any}) {
+function getPlatformParams(config: {[key:string]:any}): string {
     let platform = config['platform'];
 
     if (platform) {
@@ -155,7 +158,7 @@ function getPlatformParams(config: {[key:string]:any}) {
     return '--platform=native';
 }
 
-function getStandardParams(config: {[key:string]:any}) {
+function getStandardParams(config: {[key:string]:any}): string[] {
     let standard = config['standard'];
     let params: string[] = [];
 
@@ -174,7 +177,7 @@ function getStandardParams(config: {[key:string]:any}) {
     return params;
 }
 
-function getDefineParams(config: {[key:string]:any}) {
+function getDefineParams(config: {[key:string]:any}): string[] {
     let define = config['define'];
     let params: string[] = [];
 
@@ -187,7 +190,7 @@ function getDefineParams(config: {[key:string]:any}) {
     return params;
 }
 
-function getUndefineParams(config: {[key:string]:any}) {
+function getUndefineParams(config: {[key:string]:any}): string[] {
     let undefine = config['undefine'];
     let params: string[] = [];
 
@@ -200,7 +203,7 @@ function getUndefineParams(config: {[key:string]:any}) {
     return params;
 }
 
-function getSuppressionParams(config: {[key:string]:any}) {
+function getSuppressionParams(config: {[key:string]:any}): string[] {
     let suppressions = config['suppressions'];
     let params: string[] = [];
 
@@ -213,7 +216,7 @@ function getSuppressionParams(config: {[key:string]:any}) {
     return params;
 }
 
-function getLanguageParam(config: {[key:string]:any}) {
+function getLanguageParam(config: {[key:string]:any}): string[] {
     let language = config['language'];
     let params: string[] = [];
 

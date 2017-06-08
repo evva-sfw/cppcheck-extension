@@ -13,8 +13,8 @@ import * as opn from 'opn';
 import * as pc from './paramcheck';
 import * as an from './analyzer';
 import { Lint } from './linter';
+import { SuppressionProvider, suppressionCommand } from './suppressionProvider';
 
-let disposables: Set<any>;
 let config: {[key:string]:any};
 let outputChannel: vscode.OutputChannel;
 let statusItem: vscode.StatusBarItem;
@@ -24,10 +24,9 @@ let lastRootPath: string = '';
 let lintInterval: NodeJS.Timer;
 
 export function activate(context: vscode.ExtensionContext) {
-    disposables = new Set();
 
     outputChannel = vscode.window.createOutputChannel('Cppcheck');
-    disposables.add(outputChannel);
+    context.subscriptions.push(outputChannel);
     outputChannel.appendLine('Cppcheck is running.');
     an.setOutputChannel(outputChannel);
 
@@ -41,26 +40,28 @@ export function activate(context: vscode.ExtensionContext) {
     context.subscriptions.push(showCommands_d);
     context.subscriptions.push(readTheManual_d);
 
+    const suppressionCommand_d = vscode.commands.registerTextEditorCommand('cppcheck.suppressionCommand', suppressionCommand);
+    context.subscriptions.push(suppressionCommand_d);
+
     statusItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, -1000);
     statusItem.text = 'Cppcheck';
     statusItem.command = 'cppcheck.showCommands';
-    disposables.add(statusItem);
+    context.subscriptions.push(statusItem);
 
     configChanged();
     const configListener = vscode.workspace.onDidChangeConfiguration(configChanged);
-    disposables.add(configListener);
+    context.subscriptions.push(configListener);
 
     vscode.workspace.onDidSaveTextDocument((() => lintIfEnabled()).bind(this));
+
+    const filter: vscode.DocumentFilter = { language: 'cpp', scheme: 'file' };
+    context.subscriptions.push(vscode.languages.registerCodeActionsProvider(filter, new SuppressionProvider()));
+
+    context.subscriptions.push(diagnosticCollection);
 }
 
 export function deactivate() {
     clearInterval(lintInterval);
-    diagnosticCollection.dispose();
-    each(disposables, doDispose);
-}
-
-function doDispose(item: vscode.Disposable) {
-    item.dispose();
 }
 
 function lintIfEnabled() {
@@ -77,7 +78,7 @@ function checkWorkspaceChanged() {
 }
 
 function readTheManual(): Promise<void> {
-    opn('http://cppcheck.sourceforge.net/manual.pdf');
+    opn('http://cppcheck.sourceforge.net/manual.html');
     return Promise.resolve();
 }
 
@@ -201,6 +202,7 @@ function configChanged() {
         config['showOutputAfterRunning'] = settings.get('showOutputAfterRunning', true);
         config['lintingEnabled'] = settings.get('lintingEnabled', false);
         config['outputCommandLine'] = settings.get('outputCommandLine', false);
+        config['allowInlineSuppressions'] = settings.get('allowInlineSuppressions', true);
         config['severityLevels'] = settings.get('severityLevels', {
             error: 'Error',
             warning: 'Warning',

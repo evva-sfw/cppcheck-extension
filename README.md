@@ -69,6 +69,13 @@ In addition to any environment variable being expanded, `${workspaceRoot}` will 
 
 ## Release Notes
 
+### 0.2.1
+
+- Changed the 'Read the manual' command to go to the HTML manual instead of PDF.
+- Fixed improper 'inconclusive' and 'verbose' parameter handling.
+- Added 'allowInlineSuppressions' as an option, enabled by default.
+- Brand new linting engine, with support for inline suppressions.
+
 ### 0.1.3
 
 - Reverted pull #10 via pull #11.
