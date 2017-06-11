@@ -13,7 +13,7 @@ import * as opn from 'opn';
 import * as pc from './paramcheck';
 import * as an from './analyzer';
 import { Lint } from './linter';
-import { SuppressionProvider, suppressionCommand } from './suppressionProvider';
+import { SuppressionProvider, suppressionCommand, setAllowInlineSuppressions } from './suppressionProvider';
 
 let config: {[key:string]:any};
 let outputChannel: vscode.OutputChannel;
@@ -250,5 +250,7 @@ function configChanged() {
         } else {
             diagnosticCollection.clear();
         }
+
+        setAllowInlineSuppressions(<Boolean>config['allowInlineSuppressions']);
     }
 }

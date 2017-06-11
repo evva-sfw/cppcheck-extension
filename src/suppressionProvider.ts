@@ -1,15 +1,19 @@
 /*
  * SUPPRESSIONPROVIDER.TS
  * ----------------------
- * Defines a class that provide inline suppression of cppcheck diagnostics.
+ * Defines a class that provides inline suppression of cppcheck diagnostics.
  */
 
 import * as vscode from 'vscode';
 import { ErrorData } from './errorData';
 
 let errorDataMap: {[key:string]:ErrorData} = {};
+let allowInlineSuppressions: Boolean = true;
 
 export function suppressionCommand(_editor: vscode.TextEditor, edit: vscode.TextEditorEdit, error: ErrorData) {
+    if (!allowInlineSuppressions) {
+        vscode.window.showWarningMessage('Cppcheck: Inline suppressions are not currently enabled.');
+    }
     let p: vscode.Position = new vscode.Position(Number.parseInt(error.Line) - 1, 0);
     let value = `// cppcheck-suppress ${error.Id}\n`;
     edit.insert(p, value);
@@ -40,4 +44,8 @@ export function addErrorData(code: string, error: ErrorData) {
 
 export function clearErrorData() {
     errorDataMap = {};
+}
+
+export function setAllowInlineSuppressions(allow: Boolean) {
+    allowInlineSuppressions = allow;
 }
