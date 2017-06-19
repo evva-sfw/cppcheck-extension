@@ -1,51 +1,35 @@
-/*
- * SUPPRESSIONPROVIDER.TS
- * ----------------------
- * Defines a class that provides inline suppression of cppcheck diagnostics.
+/**
+ * @file SuppressionProvider.ts
+ * @desc Defines an interface for an object that can suppress cppcheck diagnostic warnings and messages.
  */
 
-import * as vscode from 'vscode';
-import { ErrorData } from './errorData';
+import { CodeActionProvider, TextEditor, TextEditorEdit } from 'vscode';
+import { CppcheckDiagnostic } from './CppcheckDiagnostic';
 
-let errorDataMap: {[key:string]:ErrorData} = {};
-let allowInlineSuppressions: Boolean = true;
+export interface SuppressionProvider extends CodeActionProvider {
+    /**
+     * Adds a cppcheck diagnostic to the suppression provider.
+     * @param code A unique code used to associate the cppcheck diagnostic with a vscode problem.
+     * @param diagnostic Diagnostic output from cppcheck.
+     */
+    add(code: string, diagnostic: CppcheckDiagnostic): void;
 
-export function suppressionCommand(_editor: vscode.TextEditor, edit: vscode.TextEditorEdit, error: ErrorData) {
-    if (!allowInlineSuppressions) {
-        vscode.window.showWarningMessage('Cppcheck: Inline suppressions are not currently enabled.');
-    }
-    let p: vscode.Position = new vscode.Position(Number.parseInt(error.Line) - 1, 0);
-    let value = `// cppcheck-suppress ${error.Id}\n`;
-    edit.insert(p, value);
-}
+    /**
+     * Clears all cppcheck diagnostics from the suppression provider.
+     */
+    clear(): void;
 
-export class SuppressionProvider implements vscode.CodeActionProvider {
-    public provideCodeActions(_document: vscode.TextDocument, _range: vscode.Range, context: vscode.CodeActionContext, _token: vscode.CancellationToken): vscode.Command[] {
-        let commands: vscode.Command[] = [];
-        for (let index = 0; index < context.diagnostics.length; index++) {
-            let d = context.diagnostics[index];
-            if (d.code in errorDataMap) {
-                let error = errorDataMap[d.code];
-                let command: vscode.Command = {
-                    command: 'cppcheck.suppressionCommand',
-                    arguments: [ error ],
-                    title: 'Suppress this message'
-                };
-                commands.push(command);
-            }
-        }
-        return commands;
-    }
-}
+    /**
+     * Informs the suppression provider whether inline suppressions are allowed.
+     * @param allow Indicates whether inline suppressions are allowed.
+     */
+    setAllowInlineSuppressions(allow: Boolean): void;
 
-export function addErrorData(code: string, error: ErrorData) {
-    errorDataMap[code] = error;
-}
-
-export function clearErrorData() {
-    errorDataMap = {};
-}
-
-export function setAllowInlineSuppressions(allow: Boolean) {
-    allowInlineSuppressions = allow;
+    /**
+     * Suppresses a single warning or message.
+     * @param _editor The parameter is not used.
+     * @param edit A single edit that will contain the added suppression.
+     * @param diagnostic Contains diagnostic information from Cppcheck.
+     */
+    suppress(_editor: TextEditor, edit: TextEditorEdit, diagnostic: CppcheckDiagnostic): void
 }

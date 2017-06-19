@@ -1,7 +1,7 @@
-/*
- * EXTENSION.TS
- * ------------
- * Contains the logic for loading and configuring the 'cppcheck' extension.
+/**
+ * @file extension.ts
+ * @author Matthew Ferreira
+ * @desc Contains the logic for loading and configuring the 'cppcheck' extension.
  */
 
 import * as vscode from 'vscode';
@@ -11,9 +11,21 @@ import { join } from 'path';
 import { each, isNull } from 'lodash';
 import * as opn from 'opn';
 import * as pc from './paramcheck';
-import * as an from './analyzer';
-import { Lint } from './linter';
-import { SuppressionProvider, suppressionCommand, setAllowInlineSuppressions } from './suppressionProvider';
+
+import { SuppressionProvider } from './SuppressionProvider';
+import { CppcheckSuppressionProvider } from './impl/CppcheckSuppressionProvider';
+
+import { Analyzer } from './Analyzer';
+import { CppcheckAnalyzer } from './impl/CppcheckAnalyzer';
+
+import { UserOutput } from './UserOutput';
+import { VscodeUserOutput } from './impl/VscodeUserOutput';
+
+import { Linter } from './Linter';
+import { BasicLinter } from './impl/BasicLinter';
+
+import { TextDocumentHandler } from './TextDocumentHandler';
+import { VscodeTextDocumentHandler } from './impl/VscodeTextDocumentHandler';
 
 let config: {[key:string]:any};
 let outputChannel: vscode.OutputChannel;
@@ -23,12 +35,74 @@ let diagnosticCollection: vscode.DiagnosticCollection = vscode.languages.createD
 let lastRootPath: string = '';
 let lintInterval: NodeJS.Timer;
 
-export function activate(context: vscode.ExtensionContext) {
+class Manager {
+    constructor(private analyzer: Analyzer,
+                private suppressionProvider: SuppressionProvider,
+                private linter: Linter) {}
 
+    configureExtension(context: vscode.ExtensionContext) {
+        const filter: vscode.DocumentFilter = { language: 'cpp', scheme: 'file' };
+        context.subscriptions.push(vscode.languages.registerCodeActionsProvider(filter, this.suppressionProvider));
+
+        const cmd = vscode.commands.registerTextEditorCommand('cppcheck.suppressionCommand', this.suppressionProvider.suppress.bind(this.suppressionProvider));
+        context.subscriptions.push(cmd);
+    }
+
+    /**
+     * Runs the source code linter on the workspace.
+     * @param config The extension configuration object.
+     * @param diagnosticCollection The collection to which lint diagnostics should be written.
+     * @param workspaceDir The workspace directory. This need not contain the file, only the root.
+     */
+    runLinter(config: {[key:string]:any}, diagnosticCollection: vscode.DiagnosticCollection, workspaceDir: string): void {
+        this.linter.Execute(diagnosticCollection, config, workspaceDir);
+    }
+
+    /**
+     * Runs Cppcheck on a single file.
+     * @param config The extension configuration object.
+     * @param fileName The file to analyzer.
+     * @param workspaceDir The workspace directory. This need not contain the file, only the root.
+     * @return A string containing the results of the analysis.
+     */
+    runOnFile(config: {[key:string]:any}, fileName: string, workspaceDir: string): string {
+        return this.analyzer.runOnFile(config, fileName, workspaceDir);
+    }
+
+    /**
+     * Runs Cppcheck on the entire workspace.
+     * @param config The extension configuration object.
+     * @param workspaceDir The workspace directory.
+     * @return A string containing the results of the analysis.
+     */
+    runOnWorkspace(config: {[key:string]:any}, workspaceDir: string): string {
+        return this.analyzer.runOnWorkspace(config, workspaceDir);
+    }
+
+    /**
+     * Informs the suppression provider whether inline suppressions are allowed.
+     * @param allow Indicates whether inline suppressions are allowed.
+     */
+    setAllowInlineSuppressions(allow: Boolean) {
+        this.suppressionProvider.setAllowInlineSuppressions(allow);
+    }
+}
+
+let manager: Manager;
+
+export function activate(context: vscode.ExtensionContext) {
     outputChannel = vscode.window.createOutputChannel('Cppcheck');
     context.subscriptions.push(outputChannel);
     outputChannel.appendLine('Cppcheck is running.');
-    an.setOutputChannel(outputChannel);
+
+    const userOutput: UserOutput = new VscodeUserOutput();
+    const analyzer: Analyzer = new CppcheckAnalyzer(userOutput, outputChannel);
+    const suppressionProvider: SuppressionProvider = new CppcheckSuppressionProvider(userOutput);
+    const textDocumentHandler: TextDocumentHandler = new VscodeTextDocumentHandler();
+    const linter = new BasicLinter(suppressionProvider, analyzer, textDocumentHandler);
+
+    manager = new Manager(analyzer, suppressionProvider, linter);
+    manager.configureExtension(context);
 
     const runAnalysis_d = vscode.commands.registerCommand('cppcheck.runAnalysis', runAnalysis);
     const runAnalysisAllFiles_d = vscode.commands.registerCommand('cppcheck.runAnalysisAllFiles', runAnalysisAllFiles);
@@ -40,8 +114,8 @@ export function activate(context: vscode.ExtensionContext) {
     context.subscriptions.push(showCommands_d);
     context.subscriptions.push(readTheManual_d);
 
-    const suppressionCommand_d = vscode.commands.registerTextEditorCommand('cppcheck.suppressionCommand', suppressionCommand);
-    context.subscriptions.push(suppressionCommand_d);
+    // const suppressionCommand_d = vscode.commands.registerTextEditorCommand('cppcheck.suppressionCommand', suppressionCommand);
+    // context.subscriptions.push(suppressionCommand_d);
 
     statusItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, -1000);
     statusItem.text = 'Cppcheck';
@@ -54,8 +128,8 @@ export function activate(context: vscode.ExtensionContext) {
 
     vscode.workspace.onDidSaveTextDocument((() => lintIfEnabled()).bind(this));
 
-    const filter: vscode.DocumentFilter = { language: 'cpp', scheme: 'file' };
-    context.subscriptions.push(vscode.languages.registerCodeActionsProvider(filter, new SuppressionProvider()));
+    // const filter: vscode.DocumentFilter = { language: 'cpp', scheme: 'file' };
+    // context.subscriptions.push(vscode.languages.registerCodeActionsProvider(filter, new SuppressionProvider()));
 
     context.subscriptions.push(diagnosticCollection);
 }
@@ -66,7 +140,7 @@ export function deactivate() {
 
 function lintIfEnabled() {
     if (config['lintingEnabled']) {
-        Lint(diagnosticCollection, config);
+        manager.runLinter(config, diagnosticCollection, vscode.workspace.rootPath);
     }
 }
 
@@ -113,7 +187,7 @@ function runAnalysis(): Promise<void> {
 
     let fileName = vscode.window.activeTextEditor.document.fileName;
     let workspaceDir = vscode.workspace.rootPath;
-    let out = an.runOnFile(config, fileName, workspaceDir);
+    let out = manager.runOnFile(config, fileName, workspaceDir);
 
     if (config['showOutputAfterRunning']) {
         outputChannel.show();
@@ -136,7 +210,7 @@ function runAnalysisAllFiles(): Promise<void> {
     }
 
     let workspaceDir = vscode.workspace.rootPath;
-    let out = an.runOnWorkspace(config, workspaceDir);
+    let out = manager.runOnWorkspace(config, workspaceDir);
 
     if (config['showOutputAfterRunning']) {
         outputChannel.show();
@@ -251,6 +325,6 @@ function configChanged() {
             diagnosticCollection.clear();
         }
 
-        setAllowInlineSuppressions(<Boolean>config['allowInlineSuppressions']);
+        manager.setAllowInlineSuppressions(<Boolean>config['allowInlineSuppressions']);
     }
 }
