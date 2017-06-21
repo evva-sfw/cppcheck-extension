@@ -1,12 +1,14 @@
 /**
- * LINTER.TS
- * ---------
- * Parses cppcheck output and adds linting hints to files.
+ * @file BasicLinter.ts
+ * @author Matthew Ferreira
+ * @desc Parses cppcheck output and adds linting hints to files.
  */
 
 import { Diagnostic, DiagnosticCollection, DiagnosticSeverity, Range, TextDocument } from 'vscode';
 import * as fs from 'fs';
 import * as path from 'path';
+import SymbolSet from '../Symbols';
+import { injectable, inject } from 'inversify';
 import { v1 } from 'uuid';
 import { parseString } from 'xml2js';
 import { get, some } from 'lodash';
@@ -29,6 +31,7 @@ interface SeverityMaps {
 /**
  * Lints source code by calling into Cppcheck and analyzing its XML output.
  */
+@injectable()
 export class BasicLinter implements Linter {
     /**
      * Constructs a new instance of BasicLinter.
@@ -36,9 +39,9 @@ export class BasicLinter implements Linter {
      * @param analyzer The object that analyzes source code files.
      * @param textDocumentHandler The object that handles text documents.
      */
-    constructor(private suppressionProvider: SuppressionProvider,
-                private analyzer: Analyzer,
-                private textDocumentHandler: TextDocumentHandler) {}
+    constructor(@inject(SymbolSet.SuppressionProvider) private suppressionProvider: SuppressionProvider,
+                @inject(SymbolSet.Analyzer) private analyzer: Analyzer,
+                @inject(SymbolSet.TextDocumentHandler) private textDocumentHandler: TextDocumentHandler) {}
 
     /**
      * Executes the linter by calling Cppcheck and parsing its XML output.

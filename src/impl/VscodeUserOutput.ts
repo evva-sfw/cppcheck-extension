@@ -6,10 +6,12 @@
 
 import * as vscode from 'vscode';
 import { UserOutput } from '../UserOutput';
+import { injectable } from 'inversify';
 
 /**
  * Displays output to the user via vscode messages.
  */
+@injectable()
 export class VscodeUserOutput implements UserOutput {
     /**
      * Shows an error message.

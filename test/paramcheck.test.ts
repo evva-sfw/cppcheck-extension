@@ -1,8 +1,10 @@
-/*
- * PARAMCHECK.TEST.TS
- * ------------------
- * Tests functions in 'paramcheck.ts'.
+/**
+ * @file paramcheck.test.ts
+ * @author Matthew Ferreira
+ * @desc Tests functions in 'paramcheck.ts'.
  */
+
+/// <reference types="mocha"/>
 
 import * as assert from 'assert';
 import * as pc from '../src/paramcheck';

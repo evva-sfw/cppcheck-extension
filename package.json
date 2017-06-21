@@ -263,9 +263,10 @@
   "dependencies": {
     "child_process": "^1.0.2",
     "fs": "0.0.1-security",
+    "inversify": "^4.1.1",
     "lodash": "^4.17.4",
     "opn": "^4.0.2",
-    "os": "^0.1.1",
+    "reflect-metadata": "^0.1.10",
     "slash": "^1.0.0",
     "var-expansion": "^0.1.0",
     "xml2js": "^0.4.17"

@@ -8,9 +8,11 @@ import { spawnSync } from 'child_process';
 import { each } from 'lodash';
 const substituteVariables = require('var-expansion').substituteVariables; // no types available
 const slash = require('slash'); // no types available
+import { injectable, inject } from 'inversify';
 import * as pc from '../paramcheck';
 import { Analyzer } from '../Analyzer';
 import { UserOutput } from '../UserOutput';
+import SymbolSet from '../Symbols';
 
 interface IExpansionResult {
     error?: any;
@@ -20,13 +22,15 @@ interface IExpansionResult {
 /**
  * Runs the Cppcheck analyzer.
  */
+@injectable()
 export class CppcheckAnalyzer implements Analyzer {
     /**
      * Constructs a new instance of Analyzer.
      * @param userOutput Displays output to the user.
      * @param outputChannel The channel to which results should be written.
      */
-    constructor(private userOutput: UserOutput, private outputChannel: OutputChannel) {}
+    constructor(@inject(SymbolSet.UserOutput) private userOutput: UserOutput,
+                @inject(SymbolSet.OutputChannel) private outputChannel: OutputChannel) {}
 
     /**
      * Runs Cppcheck on a single file.

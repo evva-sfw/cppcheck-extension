@@ -9,6 +9,8 @@ import { existsSync } from 'fs';
 import { platform } from 'os';
 import { join } from 'path';
 import { each, isNull } from 'lodash';
+import { Container, injectable, inject } from 'inversify';
+require('reflect-metadata'); // needed by inversify
 import * as opn from 'opn';
 import * as pc from './paramcheck';
 
@@ -27,18 +29,23 @@ import { BasicLinter } from './impl/BasicLinter';
 import { TextDocumentHandler } from './TextDocumentHandler';
 import { VscodeTextDocumentHandler } from './impl/VscodeTextDocumentHandler';
 
+import SymbolSet from './Symbols';
+
 let config: {[key:string]:any};
 let outputChannel: vscode.OutputChannel;
 let statusItem: vscode.StatusBarItem;
 
 let diagnosticCollection: vscode.DiagnosticCollection = vscode.languages.createDiagnosticCollection('cppcheck');
 let lastRootPath: string = '';
-let lintInterval: NodeJS.Timer;
+let lintInterval: number;
 
+@injectable()
 class Manager {
-    constructor(private analyzer: Analyzer,
-                private suppressionProvider: SuppressionProvider,
-                private linter: Linter) {}
+    constructor(@inject(SymbolSet.Analyzer) private analyzer: Analyzer,
+                @inject(SymbolSet.SuppressionProvider) private suppressionProvider: SuppressionProvider,
+                @inject(SymbolSet.Linter) private linter: Linter) {
+        this.configureInjection();
+    }
 
     configureExtension(context: vscode.ExtensionContext) {
         const filter: vscode.DocumentFilter = { language: 'cpp', scheme: 'file' };
@@ -46,6 +53,10 @@ class Manager {
 
         const cmd = vscode.commands.registerTextEditorCommand('cppcheck.suppressionCommand', this.suppressionProvider.suppress.bind(this.suppressionProvider));
         context.subscriptions.push(cmd);
+    }
+
+    private configureInjection() {
+
     }
 
     /**
@@ -95,13 +106,17 @@ export function activate(context: vscode.ExtensionContext) {
     context.subscriptions.push(outputChannel);
     outputChannel.appendLine('Cppcheck is running.');
 
-    const userOutput: UserOutput = new VscodeUserOutput();
-    const analyzer: Analyzer = new CppcheckAnalyzer(userOutput, outputChannel);
-    const suppressionProvider: SuppressionProvider = new CppcheckSuppressionProvider(userOutput);
-    const textDocumentHandler: TextDocumentHandler = new VscodeTextDocumentHandler();
-    const linter = new BasicLinter(suppressionProvider, analyzer, textDocumentHandler);
+    let container = new Container();
+    container.bind<Analyzer>(SymbolSet.Analyzer).to(CppcheckAnalyzer).inSingletonScope();
+    container.bind<Linter>(SymbolSet.Linter).to(BasicLinter).inSingletonScope();
+    container.bind<SuppressionProvider>(SymbolSet.SuppressionProvider).to(CppcheckSuppressionProvider).inSingletonScope();
+    container.bind<TextDocumentHandler>(SymbolSet.TextDocumentHandler).to(VscodeTextDocumentHandler).inSingletonScope();
+    container.bind<UserOutput>(SymbolSet.UserOutput).to(VscodeUserOutput).inSingletonScope();
 
-    manager = new Manager(analyzer, suppressionProvider, linter);
+    container.bind<Manager>(SymbolSet.Manager).to(Manager).inSingletonScope();
+    container.bind<vscode.OutputChannel>(SymbolSet.OutputChannel).toConstantValue(outputChannel);
+
+    manager = container.get<Manager>(SymbolSet.Manager);
     manager.configureExtension(context);
 
     const runAnalysis_d = vscode.commands.registerCommand('cppcheck.runAnalysis', runAnalysis);
@@ -114,9 +129,6 @@ export function activate(context: vscode.ExtensionContext) {
     context.subscriptions.push(showCommands_d);
     context.subscriptions.push(readTheManual_d);
 
-    // const suppressionCommand_d = vscode.commands.registerTextEditorCommand('cppcheck.suppressionCommand', suppressionCommand);
-    // context.subscriptions.push(suppressionCommand_d);
-
     statusItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, -1000);
     statusItem.text = 'Cppcheck';
     statusItem.command = 'cppcheck.showCommands';
@@ -127,10 +139,6 @@ export function activate(context: vscode.ExtensionContext) {
     context.subscriptions.push(configListener);
 
     vscode.workspace.onDidSaveTextDocument((() => lintIfEnabled()).bind(this));
-
-    // const filter: vscode.DocumentFilter = { language: 'cpp', scheme: 'file' };
-    // context.subscriptions.push(vscode.languages.registerCodeActionsProvider(filter, new SuppressionProvider()));
-
     context.subscriptions.push(diagnosticCollection);
 }
 

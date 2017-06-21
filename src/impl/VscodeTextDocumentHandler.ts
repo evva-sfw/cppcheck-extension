@@ -6,10 +6,12 @@
 
 import * as vscode from 'vscode';
 import { TextDocumentHandler } from '../TextDocumentHandler';
+import { injectable } from 'inversify';
 
 /**
  * Implements a text document handler by simply calling into vscode.
  */
+@injectable()
 export class VscodeTextDocumentHandler implements TextDocumentHandler {
     /**
      * Opens a text document.

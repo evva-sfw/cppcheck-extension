@@ -5,13 +5,16 @@
  */
 
 import { CancellationToken, CodeActionContext, Command, Position, Range, TextDocument, TextEditor, TextEditorEdit } from 'vscode';
+import { injectable, inject } from 'inversify';
 import { CppcheckDiagnostic } from '../CppcheckDiagnostic';
 import { UserOutput } from '../UserOutput';
 import { SuppressionProvider } from '../SuppressionProvider';
+import SymbolSet from '../Symbols';
 
 /**
  * Provides inline code suppression of cppcheck warnings and messages.
  */
+@injectable()
 export class CppcheckSuppressionProvider implements SuppressionProvider {
     /**
      * Indicates whether inline suppressions are allowed. The provider will display a warning message,
@@ -28,7 +31,7 @@ export class CppcheckSuppressionProvider implements SuppressionProvider {
      * Constructs an interface of SuppressionProvider.
      * @param userOutput The interface used for displaying output to the user.
      */
-    constructor(private userOutput: UserOutput) {}
+    constructor(@inject(SymbolSet.UserOutput) private userOutput: UserOutput) {}
 
     /**
      * Adds a cppcheck diagnostic to the suppression provider.
