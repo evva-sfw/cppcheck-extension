@@ -1,7 +1,6 @@
 /**
- * @file paramcheck.test.ts
  * @author Matthew Ferreira
- * @desc Tests functions in 'paramcheck.ts'.
+ * @file Tests functions in 'paramcheck.ts'.
  */
 
 /// <reference types="mocha"/>
@@ -9,53 +8,61 @@
 import * as assert from 'assert';
 import * as pc from '../src/paramcheck';
 
-suite('paramcheck tests', paramcheckTests);
+suite('paramcheck', function() {
+    suite('#isValidStandard', function() {
+        test('returns false when given a bad standard', function() {
+            assert.strictEqual(pc.isValidStandard('Pascal'), false);
+            assert.strictEqual(pc.isValidLanguage('ISO8601'), false);
+            assert.strictEqual(pc.isValidLanguage(null), false);
+            assert.strictEqual(pc.isValidLanguage(undefined), false);
+            assert.strictEqual(pc.isValidLanguage(''), false);
+            assert.strictEqual(pc.isValidLanguage('ISO9000'), false);
+            assert.strictEqual(pc.isValidLanguage('ecma-376'), false);
+        });
+        test('returns true when given valid standards', function() {
+            const allowedStandards = [ 'posix', 'c89', 'c99', 'c11', 'c++03', 'c++11' ];
+            for (let index = 0; index < allowedStandards.length; index++) {
+                let element = allowedStandards[index];
+                assert.strictEqual(pc.isValidStandard(element), true);
+            }
+        });
+    });
+    suite('#isValidPlatform', function() {
+        test('returns false when given a bad platform', function() {
+            assert.strictEqual(pc.isValidPlatform('ENIAC'), false);
+            assert.strictEqual(pc.isValidPlatform('VC3600'), false);
+            assert.strictEqual(pc.isValidPlatform('VAX'), false);
+            assert.strictEqual(pc.isValidPlatform('UltraSPARC'), false);
+            assert.strictEqual(pc.isValidPlatform(null), false);
+            assert.strictEqual(pc.isValidPlatform(undefined), false);
+            assert.strictEqual(pc.isValidPlatform(''), false);
+        });
+        test('returns true when given valid platforms', function() {
+            const allowedPlatforms = [ 'unix32', 'unix64', 'win32A', 'win32W', 'win64', 'native' ];
+            for (let index = 0; index < allowedPlatforms.length; index++) {
+                let element = allowedPlatforms[index];
+                assert.strictEqual(pc.isValidPlatform(element), true);
+            }
+        });
+    });
+    suite('#isValidLanguage', function() {
+        test('returns false when given a bad language', function() {
+            assert.strictEqual(pc.isValidLanguage('Pascal'), false);
+            assert.strictEqual(pc.isValidLanguage('HTML'), false);
+            assert.strictEqual(pc.isValidLanguage('Visual Basic'), false);
+            assert.strictEqual(pc.isValidLanguage(''), false);
+            assert.strictEqual(pc.isValidLanguage(undefined), false);
+            assert.strictEqual(pc.isValidLanguage(null), false);
+        });
+        test('returns true when given a valid language', function() {
+            const allowLanguages = [ 'c', 'c++' ];
+            for (let index = 0; index < allowLanguages.length; index++) {
+                let element = allowLanguages[index];
+                assert.strictEqual(pc.isValidLanguage(element), true);
+            }
+        });
+    });
+});
 
-function paramcheckTests() {
-    test('isValidStandard: bad standard', testIsValidStandard_BadStandard);
-    test('isValidStandard: allowed standards', testIsValidStandard_AllowedStandards);
 
-    test('isValidPlatform: bad platform', testIsValidPlatform_BadPlatform);
-    test('isValidPlatform: allowed platforms', testIsValidPlatform_AllowedPlatforms);
 
-    test('isValidLanguage: bad language', testIsValidLanguage_BadLanguage);
-    test('isValidLanguage: allowed languages', testIsValidLanguage_AllowedLanguages);
-}
-
-function testIsValidStandard_BadStandard() {
-    assert.strictEqual(pc.isValidStandard('Pascal'), false);
-}
-
-function testIsValidStandard_AllowedStandards() {
-    const allowedStandards = [ 'posix', 'c89', 'c99', 'c11', 'c++03', 'c++11' ];
-    for (let index = 0; index < allowedStandards.length; index++) {
-        let element = allowedStandards[index];
-        assert.strictEqual(pc.isValidStandard(element), true);
-    }
-}
-
-function testIsValidPlatform_BadPlatform() {
-    assert.strictEqual(pc.isValidPlatform('ENIAC'), false);
-}
-
-function testIsValidPlatform_AllowedPlatforms() {
-    const allowedPlatforms = [ 'unix32', 'unix64', 'win32A', 'win32W', 'win64', 'native' ];
-    for (let index = 0; index < allowedPlatforms.length; index++) {
-        let element = allowedPlatforms[index];
-        assert.strictEqual(pc.isValidPlatform(element), true);
-    }
-}
-
-function testIsValidLanguage_BadLanguage() {
-    assert.strictEqual(pc.isValidLanguage('Pascal'), false);
-    assert.strictEqual(pc.isValidLanguage('HTML'), false);
-    assert.strictEqual(pc.isValidLanguage('Visual Basic'), false);
-}
-
-function testIsValidLanguage_AllowedLanguages() {
-    const allowLanguages = [ 'c', 'c++' ];
-    for (let index = 0; index < allowLanguages.length; index++) {
-        let element = allowLanguages[index];
-        assert.strictEqual(pc.isValidLanguage(element), true);
-    }
-}

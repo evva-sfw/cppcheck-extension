@@ -1,7 +1,6 @@
 /**
- * @file Analyzer.ts
  * @author Matthew Ferreira
- * @desc Defines an object that analyzes source code files.
+ * @file Defines an object that analyzes source code files.
  */
 
 export interface Analyzer {
@@ -11,7 +10,7 @@ export interface Analyzer {
      * @param workspaceDir The workspace directory.
      * @return A string containing the result of the analysis, in XML format.
      */
-    runLintMode(config: {[key:string]:any}, workspaceDir: string): string
+    runLintMode(config: {[key:string]:any}, workspaceDir: string): string;
 
     /**
      * Runs the analyzer on a single file.

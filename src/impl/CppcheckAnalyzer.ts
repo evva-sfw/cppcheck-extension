@@ -1,6 +1,6 @@
 /**
- * @file Analyzer.ts
- * @desc Contains the functions that run the 'cppcheck' static code analyzer.
+ * @author Matthew Ferreira
+ * @file Contains the functions that run the 'cppcheck' static code analyzer.
  */
 
 import { OutputChannel } from 'vscode';

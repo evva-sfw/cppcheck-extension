@@ -1,7 +1,6 @@
-/*
- * PARAMCHECK.TS
- * -------------
- * Contains functions that check whether provided parameters are valid.
+/**
+ * @author Matthew Ferreira
+ * @file Contains functions that check whether provided parameters are valid.
  */
 
 import { includes } from 'lodash';

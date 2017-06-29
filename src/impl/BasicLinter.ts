@@ -1,7 +1,6 @@
 /**
- * @file BasicLinter.ts
  * @author Matthew Ferreira
- * @desc Parses cppcheck output and adds linting hints to files.
+ * @file Parses cppcheck output and adds linting hints to files.
  */
 
 import { Diagnostic, DiagnosticCollection, DiagnosticSeverity, Range, TextDocument } from 'vscode';
@@ -124,6 +123,9 @@ export class BasicLinter implements Linter {
     private processFileErrorData(fileData: {[key:string]:CppcheckDiagnostic[]}, diagnosticCollection: DiagnosticCollection, config: {[key:string]:any}) {
         for (let fileName in fileData) {
             this.textDocumentHandler.open(fileName).then((doc: TextDocument) => {
+                if (!doc) {
+                    return;
+                }
                 let diagnostics: Diagnostic[] = [];
                 for (let index = 0; index < fileData[fileName].length; index++) {
                     let error = fileData[fileName][index];
@@ -147,7 +149,9 @@ export class BasicLinter implements Linter {
                     }
                 }
                 diagnosticCollection.set(doc.uri, diagnostics);
-            });
+            }, (reason: any) => {
+                console.log(reason.message || reason);
+            })
         }
     }
 }

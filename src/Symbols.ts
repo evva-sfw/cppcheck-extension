@@ -1,7 +1,6 @@
 /**
- * @file Symbols.ts
  * @author Matthew Ferreira
- * @desc Contains the exported set of injection symbols.
+ * @file Contains the exported set of injection symbols.
  */
 
 let SymbolSet = {

@@ -1,7 +1,6 @@
 /**
- * @file VscodeUserOutput.TS
  * @author Matthew Ferreira
- * @desc Defines a class that provides output to the user by implementing vscode messages.
+ * @file Defines a class that provides output to the user by implementing vscode messages.
  */
 
 import * as vscode from 'vscode';

@@ -1,7 +1,6 @@
 /**
- * @file TextDocumentHandler.ts
  * @author Matthew Ferreira
- * @desc Defines an object that handles text documents.
+ * @file Defines an object that handles text documents.
  */
 
 import { TextDocument } from 'vscode';

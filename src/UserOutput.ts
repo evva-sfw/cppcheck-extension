@@ -1,7 +1,6 @@
 /**
- * @file UserOutput.ts
  * @author Matthew Ferreira
- * @desc Defines a type that provides output to the user.
+ * @file Defines a type that provides output to the user.
  */
 
 /**

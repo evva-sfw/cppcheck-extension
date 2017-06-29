@@ -1,7 +1,6 @@
-/*
- * SUPPRESSIONPROVIDER.TS
- * ----------------------
- * Defines a class that provides inline suppression of cppcheck diagnostics.
+/**
+ * @author Matthew Ferreira
+ * @file Defines a class that provides inline suppression of cppcheck diagnostics.
  */
 
 import { CancellationToken, CodeActionContext, Command, Position, Range, TextDocument, TextEditor, TextEditorEdit } from 'vscode';

@@ -1,7 +1,6 @@
 /**
- * @file VscodeTextDocumentHandler.ts
  * @author Matthew Ferreira
- * @desc Implements a text document handler by simply calling into vscode.
+ * @file Implements a text document handler by simply calling into vscode.
  */
 
 import * as vscode from 'vscode';

@@ -1,7 +1,6 @@
 /**
- * @file extension.ts
  * @author Matthew Ferreira
- * @desc Contains the logic for loading and configuring the 'cppcheck' extension.
+ * @file Contains the logic for loading and configuring the 'cppcheck' extension.
  */
 
 import * as vscode from 'vscode';
@@ -113,10 +112,9 @@ export function activate(context: vscode.ExtensionContext) {
     container.bind<TextDocumentHandler>(SymbolSet.TextDocumentHandler).to(VscodeTextDocumentHandler).inSingletonScope();
     container.bind<UserOutput>(SymbolSet.UserOutput).to(VscodeUserOutput).inSingletonScope();
 
-    container.bind<Manager>(SymbolSet.Manager).to(Manager).inSingletonScope();
     container.bind<vscode.OutputChannel>(SymbolSet.OutputChannel).toConstantValue(outputChannel);
 
-    manager = container.get<Manager>(SymbolSet.Manager);
+    manager = container.resolve(Manager);
     manager.configureExtension(context);
 
     const runAnalysis_d = vscode.commands.registerCommand('cppcheck.runAnalysis', runAnalysis);

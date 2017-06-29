@@ -1,6 +1,6 @@
 /**
- * @file SuppressionProvider.ts
- * @desc Defines an interface for an object that can suppress cppcheck diagnostic warnings and messages.
+ * @author Matthew Ferreira
+ * @file Defines an interface for an object that can suppress cppcheck diagnostic warnings and messages.
  */
 
 import { CodeActionProvider, TextEditor, TextEditorEdit } from 'vscode';
@@ -31,5 +31,5 @@ export interface SuppressionProvider extends CodeActionProvider {
      * @param edit A single edit that will contain the added suppression.
      * @param diagnostic Contains diagnostic information from Cppcheck.
      */
-    suppress(_editor: TextEditor, edit: TextEditorEdit, diagnostic: CppcheckDiagnostic): void
+    suppress(_editor: TextEditor, edit: TextEditorEdit, diagnostic: CppcheckDiagnostic): void;
 }

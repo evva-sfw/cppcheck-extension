@@ -1,7 +1,6 @@
 /**
- * @file Linter.ts
  * @author Matthew Ferreira
- * @desc Defines an object that lints source code files.
+ * @file Defines an object that lints source code files.
  */
 
 import { DiagnosticCollection } from 'vscode';

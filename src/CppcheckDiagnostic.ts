@@ -1,7 +1,6 @@
 /**
- * @file CppcheckDiagnostic.ts
  * @author Matthew Ferreira
- * @desc Defines the CppcheckDiagnostic data object.
+ * @file Defines the CppcheckDiagnostic data object.
  */
 
 /**
