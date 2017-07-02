@@ -6,11 +6,8 @@
 /// <reference types="mocha"/>
 
 import * as assert from 'assert';
-import { MockAnalyzer } from './mocks/Analyzer';
-import { MockDiagnosticCollection } from './mocks/DiagnosticCollection';
-import { MockSuppressionProvider } from './mocks/SuppressionProvider';
-import { MockTextDocumentHandler } from './mocks/TextDocumentHandler';
-import { BasicLinter } from '../src/impl/BasicLinter';
+import { MockAnalyzer, MockDiagnosticCollection, MockSuppressionProvider, MockTextDocumentHandler } from './mocks';
+import { BasicLinter } from '../src/impl';
 
 suite('BasicLinter', function() {
     suite('#Execute', function() {
@@ -31,7 +28,7 @@ suite('BasicLinter', function() {
             let diagnosticCollection = new MockDiagnosticCollection();
             linter.Execute(diagnosticCollection, {}, 'C:/Workspaces');
             assert.strictEqual(suppressionProvider.wasClear, true);
-        })
+        });
         test('calls "runLintMode" on the Analyzer instance', function() {
             let analyzer = new MockAnalyzer();
             let suppressionProvider = new MockSuppressionProvider();

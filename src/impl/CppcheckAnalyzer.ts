@@ -41,7 +41,7 @@ export class CppcheckAnalyzer implements Analyzer {
      */
     runOnFile(config: {[key:string]:any}, fileName: string, workspaceDir: string): string {
         if (!config['enable']) {
-            this.userOutput.ShowInfo('Cppcheck is not enabled.');
+            this.userOutput.showInfo('Cppcheck is not enabled.');
             return undefined;
         }
 
@@ -58,7 +58,7 @@ export class CppcheckAnalyzer implements Analyzer {
      */
     runOnWorkspace(config: {[key:string]:any}, workspaceDir: string): string {
         if (!config['enable']) {
-            this.userOutput.ShowInfo('Cppcheck is not enabled.');
+            this.userOutput.showInfo('Cppcheck is not enabled.');
             return undefined;
         }
 
@@ -77,7 +77,7 @@ export class CppcheckAnalyzer implements Analyzer {
      */
     runLintMode(config: {[key:string]:any}, workspaceDir: string): string {
         if (!config['enable']) {
-            this.userOutput.ShowInfo('Cppcheck is not enabled.');
+            this.userOutput.showInfo('Cppcheck is not enabled.');
             return undefined;
         }
 

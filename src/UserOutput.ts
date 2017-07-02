@@ -10,15 +10,15 @@ export interface UserOutput {
     /**
      * Shows an error message.
      */
-    ShowError(message: string): void;
+    showError(message: string): void;
 
     /**
      * Shows an informational message.
      */
-    ShowInfo(message: string): void;
+    showInfo(message: string): void;
 
     /**
      * Shows a warning message.
      */
-    ShowWarning(message: string): void;
+    showWarning(message: string): void;
 }

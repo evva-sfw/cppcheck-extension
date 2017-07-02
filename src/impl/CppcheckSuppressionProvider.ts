@@ -89,7 +89,7 @@ export class CppcheckSuppressionProvider implements SuppressionProvider {
      */
     public suppress(_editor: TextEditor, edit: TextEditorEdit, diagnostic: CppcheckDiagnostic): void {
         if (!this.allowInlineSuppressions) {
-            this.userOutput.ShowWarning('Cppcheck: Inline suppressions are not currently enabled.');
+            this.userOutput.showWarning('Cppcheck: Inline suppressions are not currently enabled.');
         }
         let p: Position = new Position(Number.parseInt(diagnostic.Line) - 1, 0);
         let value = `// cppcheck-suppress ${diagnostic.Id}\n`;

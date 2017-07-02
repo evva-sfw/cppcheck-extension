@@ -13,21 +13,12 @@ require('reflect-metadata'); // needed by inversify
 import * as opn from 'opn';
 import * as pc from './paramcheck';
 
-import { SuppressionProvider } from './SuppressionProvider';
-import { CppcheckSuppressionProvider } from './impl/CppcheckSuppressionProvider';
-
 import { Analyzer } from './Analyzer';
-import { CppcheckAnalyzer } from './impl/CppcheckAnalyzer';
-
-import { UserOutput } from './UserOutput';
-import { VscodeUserOutput } from './impl/VscodeUserOutput';
-
 import { Linter } from './Linter';
-import { BasicLinter } from './impl/BasicLinter';
-
+import { SuppressionProvider } from './SuppressionProvider';
 import { TextDocumentHandler } from './TextDocumentHandler';
-import { VscodeTextDocumentHandler } from './impl/VscodeTextDocumentHandler';
-
+import { UserOutput } from './UserOutput';
+import { BasicLinter, CppcheckAnalyzer, CppcheckSuppressionProvider, VscodeTextDocumentHandler, VscodeUserOutput } from './impl';
 import SymbolSet from './Symbols';
 
 let config: {[key:string]:any};
