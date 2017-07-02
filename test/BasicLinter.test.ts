@@ -6,8 +6,11 @@
 /// <reference types="mocha"/>
 
 import * as assert from 'assert';
-import { MockAnalyzer, MockDiagnosticCollection, MockSuppressionProvider, MockTextDocumentHandler } from './mocks';
-import { BasicLinter } from '../src/impl';
+import { MockAnalyzer } from './mocks/Analyzer';
+import { MockDiagnosticCollection } from './mocks/DiagnosticCollection';
+import { MockSuppressionProvider } from './mocks/SuppressionProvider';
+import { MockTextDocumentHandler } from './mocks/TextDocumentHandler';
+import { BasicLinter } from '../src/impl/BasicLinter';
 
 suite('BasicLinter', function() {
     suite('#Execute', function() {

@@ -18,7 +18,11 @@ import { Linter } from './Linter';
 import { SuppressionProvider } from './SuppressionProvider';
 import { TextDocumentHandler } from './TextDocumentHandler';
 import { UserOutput } from './UserOutput';
-import { BasicLinter, CppcheckAnalyzer, CppcheckSuppressionProvider, VscodeTextDocumentHandler, VscodeUserOutput } from './impl';
+import { BasicLinter } from './impl/BasicLinter';
+import { CppcheckAnalyzer } from './impl/CppcheckAnalyzer';
+import { CppcheckSuppressionProvider } from './impl/CppcheckSuppressionProvider';
+import { VscodeTextDocumentHandler } from './impl/VscodeTextDocumentHandler';
+import { VscodeUserOutput } from './impl/VscodeUserOutput';
 import SymbolSet from './Symbols';
 
 let config: {[key:string]:any};
