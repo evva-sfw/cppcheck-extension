@@ -12,24 +12,24 @@ import { injectable } from 'inversify';
  */
 @injectable()
 export class VscodeUserOutput implements UserOutput {
-    /**
-     * Shows an error message.
-     */
-    showError(message: string): void {
-        vscode.window.showErrorMessage(message);
-    }
+  /**
+   * Shows an error message.
+   */
+  showError(message: string): void {
+    vscode.window.showErrorMessage(message);
+  }
 
-    /**
-     * Shows an informational message.
-     */
-    showInfo(message: string): void {
-        vscode.window.showInformationMessage(message);
-    }
+  /**
+   * Shows an informational message.
+   */
+  showInfo(message: string): void {
+    vscode.window.showInformationMessage(message);
+  }
 
-    /**
-     * Shows a warning message.
-     */
-    showWarning(message: string): void {
-        vscode.window.showWarningMessage(message);
-    }
+  /**
+   * Shows a warning message.
+   */
+  showWarning(message: string): void {
+    vscode.window.showWarningMessage(message);
+  }
 }

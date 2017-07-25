@@ -1,12 +1,24 @@
 {
-	"rules": {
-		"no-unused-expression": true,
-		"no-duplicate-variable": true,
-		"curly": true,
-		"class-name": true,
-		"semicolon": ["always"],
-		"triple-equals": true,
-        "comment-format": [ true, "check-space", { "ignore-pattern": "-" } ],
-        "quotemark": [ true, "single", "avoid-escape" ]
-	}
+  "rules": {
+    "no-unused-expression": true,
+    "no-duplicate-variable": true,
+    "curly": true,
+    "class-name": true,
+    "semicolon": [
+      "always"
+    ],
+    "triple-equals": true,
+    "comment-format": [
+      true,
+      "check-space",
+      {
+        "ignore-pattern": "-"
+      }
+    ],
+    "quotemark": [
+      true,
+      "single",
+      "avoid-escape"
+    ]
+  }
 }
