@@ -8,6 +8,7 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 - Fixed improper 'inconclusive' and 'verbose' parameter handling.
 - Added 'allowInlineSuppressions' as an option, enabled by default.
 - Brand new linting engine, with support for inline suppressions.
+- Issue #13 (project support).
 
 ## [0.1.3] - 2017-06-03
 - Reverted pull #10 via pull #11.

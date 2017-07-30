@@ -60,6 +60,7 @@ settings, or per-workspace in workspace settings. The current recommendation is 
 * `cppcheck.outputCommandLine`: Whether to output the command line used to invoke Cppcheck.
 * `cppcheck.language`: Force 'cppcheck' to check all files as the given language.
 * `cppcheck.inconclusive`: Allow reporting even though analysis is inconclusive. May lead to false positives.
+* `cppcheck.projectFile`: Analyzes CMake or Visual Studio projects.
 * `cppcheck.severityLevels`: Maps the severity levels of cppcheck to VSCode severity levels (Error, Warning, Information, Hint). Setting to 'None' will not show the severity type at all.
 
 ### A quick note on paths
@@ -75,6 +76,7 @@ In addition to any environment variable being expanded, `${workspaceRoot}` will 
 - Fixed improper 'inconclusive' and 'verbose' parameter handling.
 - Added 'allowInlineSuppressions' as an option, enabled by default.
 - Brand new linting engine, with support for inline suppressions.
+- Issue #13 (project support).
 
 ### 0.1.3
 
