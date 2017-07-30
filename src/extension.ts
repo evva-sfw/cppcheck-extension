@@ -38,7 +38,6 @@ class Manager {
   constructor( @inject(SymbolSet.Analyzer) private analyzer: Analyzer,
     @inject(SymbolSet.SuppressionProvider) private suppressionProvider: SuppressionProvider,
     @inject(SymbolSet.Linter) private linter: Linter) {
-    this.configureInjection();
   }
 
   configureExtension(context: vscode.ExtensionContext) {
@@ -47,10 +46,6 @@ class Manager {
 
     const cmd = vscode.commands.registerTextEditorCommand('cppcheck.suppressionCommand', this.suppressionProvider.suppress.bind(this.suppressionProvider));
     context.subscriptions.push(cmd);
-  }
-
-  private configureInjection() {
-
   }
 
   /**
@@ -278,6 +273,7 @@ function configChanged() {
     config['lintingEnabled'] = settings.get('lintingEnabled', false);
     config['outputCommandLine'] = settings.get('outputCommandLine', false);
     config['allowInlineSuppressions'] = settings.get('allowInlineSuppressions', true);
+    config['projectFile'] = settings.get('projectFile', null);
     config['severityLevels'] = settings.get('severityLevels', {
       error: 'Error',
       warning: 'Warning',

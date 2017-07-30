@@ -8,6 +8,7 @@ import { spawnSync } from 'child_process';
 import { each } from 'lodash';
 const substituteVariables = require('var-expansion').substituteVariables; // no types available
 const slash = require('slash'); // no types available
+import { existsSync } from 'fs';
 import { injectable, inject } from 'inversify';
 import * as pc from '../paramcheck';
 import { Analyzer } from '../Analyzer';
@@ -126,6 +127,7 @@ export class CppcheckAnalyzer implements Analyzer {
     let suppressionParams = this.getSuppressionParams(config);
     let languageParam = this.getLanguageParams(config);
     let platformParam = this.getPlatformParams(config);
+    let projectParam = this.getProjectParam(config);
     let params = enableParams
       .concat(includeParams)
       .concat(standardParams)
@@ -133,7 +135,8 @@ export class CppcheckAnalyzer implements Analyzer {
       .concat(undefineParams)
       .concat(suppressionParams)
       .concat(languageParam)
-      .concat(platformParam);
+      .concat(platformParam)
+      .concat(projectParam);
 
     if (!lintMode) {
       if (config['verbose'] === true) {
@@ -214,6 +217,15 @@ export class CppcheckAnalyzer implements Analyzer {
       params.push('--platform=native');
     }
 
+    return params;
+  }
+
+  private getProjectParam(config: { [key: string]: any }): string[] {
+    let projectFile = config['projectFile'];
+    let params: string[] = [];
+    if (projectFile && existsSync(projectFile)) {
+      params.push(`--project=${projectFile}`);
+    }
     return params;
   }
 

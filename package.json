@@ -148,6 +148,11 @@
           "default": true,
           "description": "Enable inline suppressions."
         },
+        "cppcheck.projectFile": {
+          "type": "string",
+          "default": "",
+          "description": "Analyzes CMake or Visual Studio projects."
+        },
         "cppcheck.severityLevels": {
           "type": "object",
           "description": "Maps the severity levels of cppcheck to VSCode severity levels (Error, Warning, Information, Hint). Setting to 'None' will not show the severity type at all.",
