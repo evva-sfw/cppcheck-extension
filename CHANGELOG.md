@@ -3,7 +3,7 @@ All notable changes to the "cppcheck" extension will be documented in this file.
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
-## [0.2.1] - FUTURE
+## [0.2.1] - 2017-07-30
 - Changed the 'Read the manual' command to go to the HTML manual instead of PDF.
 - Fixed improper 'inconclusive' and 'verbose' parameter handling.
 - Added 'allowInlineSuppressions' as an option, enabled by default.
