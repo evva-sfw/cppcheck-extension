@@ -220,11 +220,18 @@ export class CppcheckAnalyzer implements Analyzer {
     return params;
   }
 
-  private getProjectParam(config: { [key: string]: any }): string[] {
-    let projectFile = config['projectFile'];
+  private getProjectParam(config: { [key: string]: any }, workspaceDir: string): string[] {
+    let value = config['projectFile'];
     let params: string[] = [];
-    if (projectFile && existsSync(projectFile)) {
-      params.push(`--project=${projectFile}`);
+    if (value) {
+      let result = this.expandVariables(value, workspaceDir);
+      if (result.error) {
+        this.outputChannel.appendLine(`Error expanding include path '${value}': ${result.error.message || result.error}`);
+      } else if (existsSync(result.result)) {
+        params.push(`--project=${result.result}`);
+      } else {
+        this.outputChannel.appendLine(`The specified project file '${value}' does not exist.`);
+      }
     }
     return params;
   }
