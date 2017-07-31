@@ -260,7 +260,6 @@
     "@types/xml2js": "^0.4.0",
     "eslint": "^4.1.1",
     "mocha": "^3.4.2",
-    "os": "^0.1.1",
     "tslint": "^5.4.3",
     "typescript": "^2.4.1",
     "vscode": "^1.1.1"
@@ -271,8 +270,10 @@
     "inversify": "^4.1.1",
     "lodash": "^4.17.4",
     "opn": "^5.1.0",
+    "os": "^0.1.1",
     "reflect-metadata": "^0.1.10",
     "slash": "^1.0.0",
+    "uuid": "^3.1.0",
     "var-expansion": "^0.1.0",
     "xml2js": "^0.4.17"
   }
