@@ -127,7 +127,7 @@ export class CppcheckAnalyzer implements Analyzer {
     let suppressionParams = this.getSuppressionParams(config);
     let languageParam = this.getLanguageParams(config);
     let platformParam = this.getPlatformParams(config);
-    let projectParam = this.getProjectParam(config);
+    let projectParam = this.getProjectParam(config, workspaceDir);
     let params = enableParams
       .concat(includeParams)
       .concat(standardParams)
@@ -220,6 +220,12 @@ export class CppcheckAnalyzer implements Analyzer {
     return params;
   }
 
+  /**
+   * Collects the project parameter.
+   * @param config The extension configuration object.
+   * @param workspaceDir The workspace directory.
+   * @return An array of strings containing the language standard parameters.
+   */
   private getProjectParam(config: { [key: string]: any }, workspaceDir: string): string[] {
     let value = config['projectFile'];
     let params: string[] = [];
