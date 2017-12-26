@@ -80,9 +80,9 @@
           "type": "array",
           "default": [
             "c11",
-            "c++11"
+            "c++14"
           ],
-          "description": "The language standards to check against. Can be one or more of: posix, c89, c99, c11, c++03, c++11."
+          "description": "The language standards to check against. Can be one or more of: posix, c89, c99, c11, c++03, c++11, c++14."
         },
         "cppcheck.define": {
           "type": "array",
@@ -122,6 +122,11 @@
           "type": "boolean",
           "default": false,
           "description": "Controls whether cppcheck enumerates all possible configurations."
+        },
+        "cppcheck.hideProgressMessages": {
+          "type": "boolean",
+          "default": false,
+          "description": "Controls whether progress messages are hidden."
         },
         "cppcheck.showStatusBarItem": {
           "type": "boolean",

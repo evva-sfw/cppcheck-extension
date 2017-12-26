@@ -156,6 +156,10 @@ export class CppcheckAnalyzer implements Analyzer {
       params.push('--inline-suppr');
     }
 
+    if (config['hideProgressMessages'] === true) {
+      params.push('--quiet');
+    }
+
     return params;
   }
 
