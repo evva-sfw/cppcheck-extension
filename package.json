@@ -2,7 +2,7 @@
   "name": "cppcheck",
   "displayName": "cppcheck",
   "description": "Invokes the 'cppcheck' static C++ code analyzer.",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "author": "Matthew Ferreira",
   "publisher": "matthewferreira",
   "license": "MIT",
