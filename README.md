@@ -62,6 +62,7 @@ settings, or per-workspace in workspace settings. The current recommendation is 
 * `cppcheck.inconclusive`: Allow reporting even though analysis is inconclusive. May lead to false positives.
 * `cppcheck.projectFile`: Analyzes CMake or Visual Studio projects.
 * `cppcheck.severityLevels`: Maps the severity levels of cppcheck to VSCode severity levels (Error, Warning, Information, Hint). Setting to 'None' will not show the severity type at all.
+* `cppcheck.hideProgressMessages`: Whether to hide analyzer progress messages.
 
 ### A quick note on paths
 
@@ -69,6 +70,11 @@ When using the `includePaths` setting, variables will be expanded once. Anything
 In addition to any environment variable being expanded, `${workspaceRoot}` will also be expanded.
 
 ## Release Notes
+
+### 0.2.2
+
+- Issue #15 (option to suppress progress messages).
+- Issue #16 (c++14 standard).
 
 ### 0.2.1
 

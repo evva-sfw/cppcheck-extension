@@ -3,6 +3,10 @@ All notable changes to the "cppcheck" extension will be documented in this file.
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
+## [0.2.2] - 2017-12-26
+- Issue #15 (option to suppress progress messages).
+- Issue #16 (c++14 standard).
+
 ## [0.2.1] - 2017-07-30
 - Changed the 'Read the manual' command to go to the HTML manual instead of PDF.
 - Fixed improper 'inconclusive' and 'verbose' parameter handling.
