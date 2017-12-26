@@ -283,7 +283,7 @@ function configChanged() {
       information: 'Information'
     });
 
-    let standard = settings.get('standard', ['c11', 'c++11']);
+    let standard = settings.get('standard', ['c11', 'c++14']);
     let outStandard: string[] = [];
     each(standard, function (stElem: string) {
       if (pc.isValidStandard(stElem)) {

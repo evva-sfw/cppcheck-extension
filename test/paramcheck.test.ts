@@ -20,7 +20,7 @@ suite('paramcheck', function () {
       assert.strictEqual(pc.isValidLanguage('ecma-376'), false);
     });
     test('returns true when given valid standards', function () {
-      const allowedStandards = ['posix', 'c89', 'c99', 'c11', 'c++03', 'c++11'];
+      const allowedStandards = ['posix', 'c89', 'c99', 'c11', 'c++03', 'c++11', 'c++14'];
       for (let index = 0; index < allowedStandards.length; index++) {
         let element = allowedStandards[index];
         assert.strictEqual(pc.isValidStandard(element), true);
