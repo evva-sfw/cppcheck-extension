@@ -63,6 +63,11 @@
           "default": [],
           "description": "Paths to search for include files. They may be relative or absolute."
         },
+        "cppcheck.excludeFilesFolders": {
+          "type": "array",
+          "default": [],
+          "description": "Paths to exclude files and folders from checking. This option does not currently work with the --project option and is only valid when supplying an input directory."
+        },
         "cppcheck.platform": {
           "type": "string",
           "enum": [

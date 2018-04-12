@@ -262,6 +262,7 @@ function configChanged() {
     config['enable'] = enable;
     config['cppcheckPath'] = cppcheckPath;
     config['includePaths'] = settings.get('includePaths', []);
+    config['excludeFilesFolders'] = settings.get('excludeFilesFolders', []);
     config['define'] = settings.get('define', []);
     config['undefine'] = settings.get('undefine', []);
     config['suppressions'] = settings.get('suppressions', []);

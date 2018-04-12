@@ -121,6 +121,7 @@ export class CppcheckAnalyzer implements Analyzer {
       ? ['--enable=warning,style,performance,portability,information,unusedFunction']
       : ['--enable=warning,style,performance,portability,information'];
     let includeParams = this.getIncludeParams(config, workspaceDir);
+    let excludeParams = this.getExcludeFafParams(config, workspaceDir);
     let standardParams = this.getStandardParams(config);
     let defineParams = this.getDefineParams(config);
     let undefineParams = this.getUndefineParams(config);
@@ -130,6 +131,7 @@ export class CppcheckAnalyzer implements Analyzer {
     let projectParam = this.getProjectParam(config, workspaceDir);
     let params = enableParams
       .concat(includeParams)
+      .concat(excludeParams)
       .concat(standardParams)
       .concat(defineParams)
       .concat(undefineParams)
@@ -180,6 +182,30 @@ export class CppcheckAnalyzer implements Analyzer {
           this.outputChannel.appendLine(`Error expanding include path '${element}': ${value.error.message}`);
         } else {
           params.push(`-I"${value.result}"`);
+        }
+      });
+    }
+
+    return params;
+  }
+
+  /**
+   * Collects the configured excluded files and folders as a set of parameters.
+   * @param config The extension configuration object.
+   * @param workspaceDir The workspace directory.
+   * @return An array of strings containing the include path parameters.
+   */
+  private getExcludeFafParams(config: { [key: string]: any }, workspaceDir: string): string[] {
+    let paths = config['excludeFilesFolders'];
+    let params: string[] = [];
+
+    if (paths) {
+      each(paths, (element: string) => {
+        let value = this.expandVariables(element, workspaceDir);
+        if (value.error) {
+          this.outputChannel.appendLine(`Error expanding include path '${element}': ${value.error.message}`);
+        } else {
+          params.push(`-i"${value.result}"`);
         }
       });
     }
